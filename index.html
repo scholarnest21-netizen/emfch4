@@ -1,0 +1,2014 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 4: Time Varying Fields & Magnetic Materials | Scholarnest</title>
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['\\(', '\\)']],
+    displayMath: [['\\[', '\\]']],
+    packages: {'[+]': ['ams']}
+  },
+  chtml: {
+    scale: 1,
+    minScale: 0.5,
+    matchFontHeight: false,
+    mtextInheritFont: true
+  },
+  options: { skipHtmlTags: ['script','noscript','style','textarea','pre'] },
+  startup: {
+    ready() {
+      MathJax.startup.defaultReady();
+      MathJax.startup.promise.then(() => {
+        // After render, ensure all display containers are scrollable
+        document.querySelectorAll('mjx-container[display="true"]').forEach(el => {
+          el.style.overflowX = 'auto';
+          el.style.maxWidth = '100%';
+          el.style.display = 'block';
+        });
+      });
+    }
+  }
+};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.min.js" crossorigin="anonymous"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --navy: #0B1E3D;
+    --deep: #0D2B5E;
+    --accent: #2563EB;
+    --sky: #38BDF8;
+    --gold: #F59E0B;
+    --soft: #E8F0FE;
+    --white: #FFFFFF;
+    --text: #1E293B;
+    --muted: #64748B;
+    --border: #CBD5E1;
+    --card: #F8FAFC;
+    --green: #10B981;
+    --purple: #8B5CF6;
+    --red: #EF4444;
+    --eq-bg: #EFF6FF;
+    --section-bg: #F1F5F9;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #F8FAFC;
+    color: var(--text);
+    line-height: 1.7;
+  }
+
+  /* ── NAVBAR ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    background: rgba(11,30,61,0.97);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    padding: 0 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px;
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 10px; text-decoration: none;
+  }
+  .nav-logo svg { height: 36px; }
+  .nav-logo span {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700; font-size: 1.2rem;
+    color: #fff; letter-spacing: -0.3px;
+  }
+  .nav-logo span em { color: var(--sky); font-style: normal; }
+  .nav-links {
+    display: flex; gap: 0; list-style: none; overflow-x: auto;
+  }
+  .nav-links a {
+    color: rgba(255,255,255,0.7); text-decoration: none;
+    font-size: 0.78rem; font-weight: 500; padding: 0.4rem 0.85rem;
+    border-radius: 6px; transition: all 0.2s; white-space: nowrap;
+  }
+  .nav-links a:hover { color: #fff; background: rgba(255,255,255,0.08); }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, #0F3460 50%, #16213E 100%);
+    padding: 120px 2rem 80px;
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(37,99,235,0.2);
+    border: 1px solid rgba(56,189,248,0.3);
+    color: var(--sky);
+    font-size: 0.75rem; font-weight: 600;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    padding: 0.35rem 1rem; border-radius: 100px;
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
+    font-weight: 700; color: #fff;
+    line-height: 1.1; margin-bottom: 1.2rem;
+    letter-spacing: -1px;
+  }
+  .hero h1 span { color: var(--sky); }
+  .hero p {
+    color: rgba(255,255,255,0.65);
+    font-size: 1.15rem; max-width: 640px; margin: 0 auto 2.5rem;
+  }
+  .hero-topics {
+    display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: center;
+  }
+  .hero-topic {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: rgba(255,255,255,0.8);
+    padding: 0.4rem 1rem; border-radius: 100px;
+    font-size: 0.82rem; font-weight: 500;
+  }
+
+  /* ── LAYOUT ── */
+  .page-wrap { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
+
+  /* ── SECTION ── */
+  .section {
+    padding: 5rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .section:last-of-type { border-bottom: none; }
+
+  .section-header {
+    display: flex; align-items: center; gap: 1rem;
+    margin-bottom: 2.5rem;
+  }
+  .section-num {
+    width: 44px; height: 44px; border-radius: 12px;
+    background: var(--accent);
+    color: #fff; font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700; font-size: 1rem;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .section-header h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.9rem; font-weight: 700;
+    color: var(--navy); letter-spacing: -0.5px;
+  }
+
+  /* ── SUBSECTION ── */
+  .subsection { margin-bottom: 3rem; }
+  .subsection h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.3rem; font-weight: 600;
+    color: var(--deep); margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--sky);
+    display: inline-block;
+  }
+  .subsection h4 {
+    font-size: 1.05rem; font-weight: 600;
+    color: var(--accent); margin: 1.5rem 0 0.6rem;
+  }
+  .subsection p { margin-bottom: 0.9rem; color: var(--text); }
+
+  /* ── EQUATION BOX ── */
+  .eq-box {
+    background: var(--eq-bg);
+    border-left: 4px solid var(--accent);
+    border-radius: 8px;
+    padding: 1.4rem 1.8rem;
+    margin: 1.5rem 0;
+    overflow-x: auto;
+    overflow-y: visible;
+    -webkit-overflow-scrolling: touch;
+  }
+  .eq-box .eq-label {
+    font-size: 0.75rem; font-weight: 600; color: var(--accent);
+    text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.6rem;
+  }
+  .eq-important {
+    background: #FFF7ED;
+    border-left-color: var(--gold);
+    border: 2px solid var(--gold);
+    border-radius: 10px;
+  }
+  .eq-important .eq-label { color: var(--gold); }
+
+  /* ── HIGHLIGHT BOXES ── */
+  .info-box {
+    border-radius: 10px; padding: 1.2rem 1.5rem; margin: 1.2rem 0;
+    border-left: 4px solid;
+  }
+  .info-box.blue { background: #EFF6FF; border-color: var(--accent); }
+  .info-box.green { background: #ECFDF5; border-color: var(--green); }
+  .info-box.amber { background: #FFFBEB; border-color: var(--gold); }
+  .info-box.purple { background: #F5F3FF; border-color: var(--purple); }
+  .info-box.red { background: #FFF1F2; border-color: var(--red); }
+  .info-box strong { display: block; margin-bottom: 0.3rem; }
+
+  /* ── BULLET LIST ── */
+  .bullet-list { list-style: none; padding: 0; margin: 0.8rem 0; }
+  .bullet-list li {
+    padding: 0.4rem 0 0.4rem 1.6rem;
+    position: relative; color: var(--text);
+  }
+  .bullet-list li::before {
+    content: '▸';
+    position: absolute; left: 0;
+    color: var(--accent); font-size: 0.85rem;
+  }
+
+  /* ── GRID ── */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.2rem; }
+  @media(max-width: 768px) {
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+  }
+
+  /* ── CARD ── */
+  .card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  }
+  .card h4 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1rem; font-weight: 600;
+    color: var(--navy); margin-bottom: 0.8rem;
+  }
+
+  /* ── TABLE ── */
+  .tbl-wrap { overflow-x: auto; margin: 1.5rem 0; border-radius: 10px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; }
+  th {
+    background: var(--navy); color: #fff;
+    padding: 0.85rem 1rem; text-align: left;
+    font-size: 0.85rem; font-weight: 600;
+  }
+  td {
+    padding: 0.75rem 1rem; border-bottom: 1px solid var(--border);
+    font-size: 0.9rem;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: var(--section-bg); }
+
+  /* ── SIMULATION CANVAS ── */
+  .sim-wrap {
+    background: #0B1E3D;
+    border-radius: 12px; padding: 1.2rem;
+    margin: 1.5rem 0;
+  }
+  .sim-wrap canvas {
+    display: block; width: 100%;
+    border-radius: 8px; background: #0B1E3D;
+  }
+  .sim-controls {
+    display: flex; gap: 0.8rem; flex-wrap: wrap;
+    margin-top: 1rem; align-items: center;
+  }
+  .sim-btn {
+    background: var(--accent); color: #fff;
+    border: none; border-radius: 8px;
+    padding: 0.5rem 1.2rem; font-size: 0.85rem; font-weight: 600;
+    cursor: pointer; transition: background 0.2s;
+  }
+  .sim-btn:hover { background: #1D4ED8; }
+  .sim-btn.secondary { background: rgba(255,255,255,0.1); }
+  .sim-label {
+    color: rgba(255,255,255,0.6); font-size: 0.8rem;
+  }
+  .sim-slider {
+    accent-color: var(--sky); width: 140px;
+  }
+
+  /* ── MAXWELL TABLE ── */
+  .maxwell-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+    border: 2px solid var(--navy); border-radius: 10px; overflow: hidden;
+    margin: 1.5rem 0;
+  }
+  .maxwell-cell {
+    padding: 1.2rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .maxwell-cell:nth-child(odd) { background: #EFF6FF; border-right: 1px solid var(--border); }
+  .maxwell-cell:nth-child(even) { background: #F0FDF4; }
+  .maxwell-cell .maxwell-name {
+    font-size: 0.75rem; font-weight: 600; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 0.5rem;
+  }
+
+  /* ── CLASSIFICATION CARDS ── */
+  .material-card {
+    border-radius: 12px; padding: 1.5rem;
+    border: 2px solid;
+  }
+  .material-card.dia { border-color: #0EA5E9; background: #F0F9FF; }
+  .material-card.para { border-color: var(--green); background: #ECFDF5; }
+  .material-card.ferro { border-color: var(--red); background: #FFF1F2; }
+  .material-card h4 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.05rem; font-weight: 700; margin-bottom: 0.5rem;
+  }
+  .material-card.dia h4 { color: #0284C7; }
+  .material-card.para h4 { color: #059669; }
+  .material-card.ferro h4 { color: #DC2626; }
+
+  /* ── LENZ DIAGRAM ── */
+  .lenz-demo {
+    background: #1E293B; border-radius: 12px;
+    padding: 1.5rem; margin: 1.5rem 0;
+    display: flex; gap: 2rem; align-items: center; flex-wrap: wrap;
+  }
+
+  /* ── BH CURVE ── */
+  #bh-canvas-wrap {
+    background: #fff; border-radius: 10px;
+    border: 1px solid var(--border); padding: 1rem; margin: 1.5rem 0;
+  }
+
+  /* ── FARADAY EXPERIMENT ── */
+  .experiment-box {
+    background: #fff; border: 2px solid var(--border);
+    border-radius: 12px; overflow: hidden; margin: 1.5rem 0;
+  }
+  .experiment-box .exp-header {
+    background: var(--navy); color: #fff;
+    padding: 0.8rem 1.5rem;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600; font-size: 0.95rem;
+  }
+  .experiment-box .exp-body { padding: 1.5rem; }
+
+  /* ── CIRCUIT ANALOGY ── */
+  .analogy-row {
+    display: grid; grid-template-columns: 1fr auto 1fr; gap: 1rem;
+    align-items: center; margin: 0.7rem 0;
+    padding: 0.7rem; border-radius: 8px;
+    transition: background 0.15s;
+  }
+  .analogy-row:hover { background: var(--section-bg); }
+  .analogy-row .electric { text-align: right; color: #1D4ED8; font-weight: 500; }
+  .analogy-row .arrow { color: var(--muted); font-size: 1.2rem; }
+  .analogy-row .magnetic { color: #B45309; font-weight: 500; }
+
+  /* ── CURIE TEMPS ── */
+  .curie-bar {
+    display: flex; align-items: center; gap: 1rem; margin: 0.7rem 0;
+  }
+  .curie-bar .material { width: 90px; font-weight: 600; font-size: 0.9rem; }
+  .curie-bar .bar-track {
+    flex: 1; height: 28px; background: #E2E8F0;
+    border-radius: 6px; overflow: hidden;
+  }
+  .curie-bar .bar-fill {
+    height: 100%; border-radius: 6px;
+    display: flex; align-items: center; padding-left: 10px;
+    color: #fff; font-size: 0.8rem; font-weight: 600;
+    transition: width 0.8s ease;
+  }
+
+  /* ── TOC ── */
+  .toc {
+    background: #fff; border: 1px solid var(--border);
+    border-radius: 12px; padding: 1.5rem;
+    position: sticky; top: 80px;
+    max-height: calc(100vh - 100px); overflow-y: auto;
+  }
+  .toc h3 { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 1rem; }
+  .toc a {
+    display: block; color: var(--muted);
+    text-decoration: none; font-size: 0.83rem;
+    padding: 0.3rem 0.6rem; border-radius: 6px;
+    transition: all 0.15s; margin: 1px 0;
+  }
+  .toc a:hover, .toc a.active { color: var(--accent); background: var(--eq-bg); }
+  .toc a.sub { padding-left: 1.2rem; font-size: 0.79rem; }
+
+  /* ── LAYOUT WITH TOC ── */
+  .content-layout {
+    display: grid; grid-template-columns: 220px 1fr; gap: 2.5rem;
+    max-width: 1300px; margin: 0 auto; padding: 0 1.5rem;
+    align-items: start;
+  }
+  @media(max-width:900px){ .content-layout { grid-template-columns: 1fr; } .toc { display: none; } }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--navy); color: rgba(255,255,255,0.5);
+    text-align: center; padding: 2.5rem 1rem;
+    font-size: 0.85rem;
+  }
+  footer strong { color: var(--sky); }
+
+  /* ── DIAGRAM SVG ── */
+  .diagram-svg {
+    display: block; margin: 1.5rem auto;
+    max-width: 100%; border-radius: 10px;
+    border: 1px solid var(--border); background: #fff;
+    padding: 1rem;
+  }
+
+  /* ── SCROLL PROGRESS ── */
+  #progress-bar {
+    position: fixed; top: 64px; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--sky), var(--accent));
+    transform-origin: left; z-index: 999;
+    transition: transform 0.1s;
+  }
+
+  /* ── STEP BOX ── */
+  .steps { counter-reset: step; }
+  .step {
+    display: flex; gap: 1rem; margin-bottom: 1.2rem;
+    padding: 1rem; background: #fff;
+    border: 1px solid var(--border); border-radius: 10px;
+  }
+  .step-num {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: var(--accent); color: #fff;
+    font-weight: 700; font-size: 0.85rem; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* highlighted definition */
+  .definition {
+    background: linear-gradient(135deg,#EFF6FF,#F0FDF4);
+    border: 1px solid #BFDBFE; border-radius: 10px;
+    padding: 1.2rem 1.5rem; margin: 1.2rem 0;
+  }
+  .definition .def-title { font-weight: 700; color: var(--navy); margin-bottom: 0.4rem; }
+
+  mjx-container { overflow-x: auto; overflow-y: visible; max-width: 100%; display: block; }
+  mjx-container[display="true"] { 
+    overflow-x: auto; 
+    overflow-y: visible; 
+    max-width: 100%; 
+    padding: 0.25rem 0;
+    display: block;
+  }
+  .MJX-TEX { overflow-x: auto; }
+  .eq-box mjx-container { margin: 0 auto; }
+</style>
+</head>
+<body>
+
+<!-- PROGRESS BAR -->
+<div id="progress-bar" style="transform:scaleX(0)"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <!-- Scholarnest Logo SVG -->
+    <svg viewBox="0 0 120 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="20" cy="20" r="16" fill="#2563EB"/>
+      <path d="M12 20 L20 13 L28 20 L20 27 Z" fill="none" stroke="#38BDF8" stroke-width="2.2"/>
+      <circle cx="20" cy="20" r="4" fill="#38BDF8"/>
+      <text x="42" y="15" font-family="'Space Grotesk',sans-serif" font-weight="700" font-size="13" fill="white">Scholar</text>
+      <text x="42" y="30" font-family="'Space Grotesk',sans-serif" font-weight="400" font-size="11" fill="#38BDF8">nest</text>
+    </svg>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#emf">EMF</a></li>
+    <li><a href="#faraday">Faraday's Law</a></li>
+    <li><a href="#motional">Motional EMF</a></li>
+    <li><a href="#lenz">Lenz Law</a></li>
+    <li><a href="#inductance">Inductance</a></li>
+    <li><a href="#magnetic-materials">Mag. Materials</a></li>
+    <li><a href="#maxwell">Maxwell's Eqns</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">Electromagnetic Theory · Chapter 4</div>
+  <h1>Time Varying Fields &<br><span>Magnetic Materials</span></h1>
+  <p>A complete study guide covering Faraday's Law, Inductance, Magnetic Materials and Maxwell's Equations in their final form.</p>
+  <div class="hero-topics">
+    <span class="hero-topic">⚡ Electromotive Force</span>
+    <span class="hero-topic">🔄 Faraday's Law</span>
+    <span class="hero-topic">↔ Motional EMF</span>
+    <span class="hero-topic">🧲 Lenz's Law</span>
+    <span class="hero-topic">🔁 Inductance</span>
+    <span class="hero-topic">⚛ Magnetic Materials</span>
+    <span class="hero-topic">∇ Maxwell's Equations</span>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="content-layout" style="padding-top:3rem; padding-bottom:4rem;">
+
+  <!-- TOC -->
+  <aside>
+    <div class="toc">
+      <h3>Contents</h3>
+      <a href="#emf">1. Electromotive Force</a>
+      <a href="#emf-battery" class="sub">EMF & Battery</a>
+      <a href="#faraday">2. Faraday's Law</a>
+      <a href="#motional">3. Motional EMF</a>
+      <a href="#lenz">4. Lenz's Law</a>
+      <a href="#induced-efield" class="sub">Induced E-Field</a>
+      <a href="#inductance">5. Inductance</a>
+      <a href="#mutual" class="sub">Mutual Inductance</a>
+      <a href="#self" class="sub">Self Inductance</a>
+      <a href="#energy" class="sub">Magnetic Energy</a>
+      <a href="#magnetic-materials">6. Magnetic Materials</a>
+      <a href="#classification" class="sub">Classification</a>
+      <a href="#bh-curve" class="sub">B-H Curve</a>
+      <a href="#boundary" class="sub">Boundary Conditions</a>
+      <a href="#mag-circuits" class="sub">Magnetic Circuits</a>
+      <a href="#maxwell">7. Maxwell's Equations</a>
+      <a href="#displacement" class="sub">Displacement Current</a>
+      <a href="#final-form" class="sub">Final Form</a>
+    </div>
+  </aside>
+
+  <!-- CONTENT -->
+  <main>
+
+    <!-- ═══════════════ SECTION 1: EMF ═══════════════ -->
+    <section class="section" id="emf">
+      <div class="section-header">
+        <div class="section-num">1</div>
+        <h2>Electromotive Force (EMF)</h2>
+      </div>
+
+      <div class="subsection">
+        <p>In <strong>1831</strong>, <strong>Michael Faraday</strong> in England and independently <strong>Joseph Henry</strong> in the United States found experimentally that a change of magnetic field through a coil wire induces a current in the wire. The results of these experiments were the foundation of a new law of nature called <em>Faraday's Law of Induction</em>.</p>
+
+        <div class="info-box blue">
+          <strong>🔑 Key Concept</strong>
+          Electromagnetic induction is the phenomenon that provides the link between electric and magnetic fields.
+        </div>
+
+        <!-- Faraday experiment diagram -->
+        <div class="subsection" id="emf-battery">
+          <h3>EMF and Battery</h3>
+
+          <!-- Faraday's Experiment SVG -->
+          <svg class="diagram-svg" viewBox="0 0 580 260" xmlns="http://www.w3.org/2000/svg">
+            <rect width="580" height="260" fill="#fff"/>
+            <!-- Battery circle -->
+            <circle cx="80" cy="130" r="35" fill="none" stroke="#1E293B" stroke-width="2.5"/>
+            <text x="72" y="126" font-size="14" fill="#1E293B" font-weight="bold">+</text>
+            <text x="72" y="142" font-size="14" fill="#1E293B">−</text>
+            <!-- Wire top -->
+            <line x1="80" y1="95" x2="80" y2="55" stroke="#1E293B" stroke-width="2.5"/>
+            <line x1="80" y1="55" x2="320" y2="55" stroke="#1E293B" stroke-width="2.5"/>
+            <!-- Switch -->
+            <circle cx="200" cy="55" r="4" fill="#1E293B"/>
+            <circle cx="240" cy="55" r="4" fill="#1E293B"/>
+            <line x1="200" y1="55" x2="238" y2="38" stroke="#1E293B" stroke-width="2.5"/>
+            <text x="195" y="30" font-size="11" fill="#64748B">SW1</text>
+            <!-- Wire bottom -->
+            <line x1="80" y1="165" x2="80" y2="205" stroke="#1E293B" stroke-width="2.5"/>
+            <line x1="80" y1="205" x2="320" y2="205" stroke="#1E293B" stroke-width="2.5"/>
+            <!-- Coil LOOP 1 (solenoid) -->
+            <rect x="290" y="80" width="60" height="100" rx="4" fill="none" stroke="#1E293B" stroke-width="2"/>
+            <!-- Coil winding lines -->
+            <line x1="303" y1="80" x2="303" y2="180" stroke="#1E293B" stroke-width="1.5" stroke-dasharray="6,4"/>
+            <line x1="315" y1="80" x2="315" y2="180" stroke="#1E293B" stroke-width="1.5" stroke-dasharray="6,4"/>
+            <line x1="327" y1="80" x2="327" y2="180" stroke="#1E293B" stroke-width="1.5" stroke-dasharray="6,4"/>
+            <line x1="339" y1="80" x2="339" y2="180" stroke="#1E293B" stroke-width="1.5" stroke-dasharray="6,4"/>
+            <text x="295" y="220" font-size="12" fill="#64748B" font-weight="600">LOOP 1</text>
+            <!-- LOOP 2 box -->
+            <rect x="380" y="70" width="140" height="120" rx="4" fill="none" stroke="#E53E3E" stroke-width="2.5"/>
+            <text x="420" y="138" font-size="13" fill="#E53E3E" font-weight="bold">LOOP 2</text>
+            <text x="390" y="220" font-size="11" fill="#64748B">(connect ammeter here)</text>
+            <!-- Battery label -->
+            <text x="50" y="240" font-size="11" fill="#2563EB" font-weight="600">Battery</text>
+          </svg>
+
+          <p>Positive charges are carried from lower potential to higher potential inside the battery. Some carrier inside the battery carries these charges <em>against</em> the electric (Coulomb) force. These may be chemical, nuclear forces, or even light energy — these are called <strong>non-electromagnetic agents</strong> acting inside the battery.</p>
+
+          <h4>Mathematical Definition of EMF</h4>
+          <p>The electromotive force is defined as the line integral of force per unit charge around a closed path:</p>
+          <div class="eq-box">
+            <div class="eq-label">Electromotive Force</div>
+            \[\varepsilon = \oint_{\text{closed path}} \frac{\vec{F} \cdot d\vec{l}}{q}\]
+          </div>
+
+          <p>This is very similar to electric potential. The potential difference between \(V_a\) and \(V_b\) (where \(V_a > V_b\)) is:</p>
+          <div class="eq-box">
+            \[\int_A^B \vec{E} \cdot d\vec{S} = V_A - V_B\]
+          </div>
+
+          <div class="info-box amber">
+            <strong>⚠ Key Distinction</strong>
+            The units of both EMF and potential are Volts. However, in Faraday's law, the EMF is a <em>non-zero closed integral</em> — meaning it should <strong>not</strong> be treated as a potential gradient. The closed loop integral of electric potential is always zero (conservative field), but EMF is not.
+          </div>
+
+          <p>The closed loop integral may become zero when we move around a loop from a positive gradient to a lower one. But in the context of Faraday's law, this electromotive force is non-zero:</p>
+          <div class="eq-box">
+            \[\varepsilon = \oint_{\text{closed path}} \frac{\vec{F} \cdot d\vec{l}}{q}\]
+          </div>
+          <p>If we have a wire along the path and if \(\varepsilon \neq 0\), then with charge \(q \neq 0\), current will flow. When the closed path is a wire and \(\varepsilon \neq 0\), the current that flows is given by <strong>Ohm's Law</strong>:</p>
+          <div class="eq-box eq-important">
+            <div class="eq-label">⭐ Ohm's Law form</div>
+            \[\varepsilon = IR\]
+          </div>
+          <p>The EMF can also be defined for a path through space — the closed loop integral gives the EMF around any closed arbitrary path, whether or not a wire is present. If a wire is present, current will flow.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ SECTION 2: FARADAY'S LAW ═══════════════ -->
+    <section class="section" id="faraday">
+      <div class="section-header">
+        <div class="section-num">2</div>
+        <h2>Faraday's Law</h2>
+      </div>
+
+      <div class="subsection">
+        <p>In 1819, <strong>Oersted</strong> discovered that a steady current produces a steady magnetic field — connecting electricity with magnetism. A little later, Faraday suggested that perhaps a steady magnetic field could produce a steady current. He performed many experiments to test this hypothesis — and it turned out <em>not</em> to be so!</p>
+
+        <div class="info-box green">
+          <strong>✅ Faraday's Conclusion</strong>
+          A <em>steady</em> magnetic field (as produced by a solenoid) does <strong>NOT</strong> produce a steady current in a nearby loop. However, a <em>changing</em> magnetic field does cause a current. This phenomenon is called <strong>electromagnetic induction</strong>.
+        </div>
+
+        <h3>Faraday's Law — Statement</h3>
+
+        <div class="definition">
+          <div class="def-title">Faraday's Law</div>
+          The EMF around a closed loop equals the negative of the time rate of change of magnetic flux through the surface bounded by that loop.
+        </div>
+
+        <div class="eq-box eq-important">
+          <div class="eq-label">⭐ Faraday's Law (Integral Form)</div>
+          \[\varepsilon = -\frac{d\Phi_{mag}}{dt}\]
+        </div>
+
+        <h3>Generalization of Faraday's Law</h3>
+        <ul class="bullet-list">
+          <li>It doesn't matter who is changing — whether the loop is moving or the field is changing with time.</li>
+          <li>It doesn't matter whether a wire is present or not. The law is true for any arbitrary contour in the universe.</li>
+          <li>This law is not about wires and current — it is about the <em>electric field</em> and the <em>changing magnetic field</em>.</li>
+          <li>This is one of <strong>Maxwell's equations</strong> — relating the electric field to the time-varying magnetic field.</li>
+          <li>It cannot be derived from Gauss's, Coulomb's, or Ampere's laws — it is a fundamentally new law of nature.</li>
+        </ul>
+
+        <div class="info-box purple">
+          <strong>📌 Important Note</strong>
+          Faraday arrived at this law through numerous experiments and concluded it to be a general result. Nothing studied before (Gauss, Coulomb, Ampere) can be used to derive it.
+        </div>
+
+        <h3>General Integral Form</h3>
+        <div class="eq-box eq-important">
+          <div class="eq-label">⭐ Faraday's Law — General Form</div>
+          \[\oint_c \vec{E} \cdot d\vec{l} = -\frac{d}{dt} \oint_s \vec{B} \cdot d\vec{S}\]
+        </div>
+
+        <!-- Interactive Faraday simulation -->
+        <h3>Interactive Simulation: Faraday's Law</h3>
+        <div class="sim-wrap">
+          <canvas id="faradayCanvas" height="200"></canvas>
+          <div class="sim-controls">
+            <button class="sim-btn" id="faradayPlay">▶ Play</button>
+            <button class="sim-btn secondary" id="faradayReset">↺ Reset</button>
+            <span class="sim-label">Magnet Speed:</span>
+            <input type="range" min="1" max="10" value="5" class="sim-slider" id="magnetSpeed">
+            <span class="sim-label" id="fluxLabel">Flux: 0.00 Wb</span>
+            <span class="sim-label" id="emfLabel" style="color:#38BDF8">EMF: 0.00 V</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ SECTION 3: MOTIONAL EMF ═══════════════ -->
+    <section class="section" id="motional">
+      <div class="section-header">
+        <div class="section-num">3</div>
+        <h2>Motional EMF</h2>
+      </div>
+
+      <div class="subsection">
+        <p>Motional EMF arises from the <strong>magnetic force on charges inside a conductor moving in a magnetic field</strong>.</p>
+
+        <!-- Motional EMF diagram -->
+        <svg class="diagram-svg" viewBox="0 0 560 280" xmlns="http://www.w3.org/2000/svg">
+          <rect width="560" height="280" fill="#fff"/>
+          <!-- B field dots (field out of page) on left region -->
+          <text x="25" y="30" font-size="11" fill="#2563EB" font-weight="600">⊙ B-field region</text>
+          <!-- Grid of dots -->
+          <g fill="#2563EB" opacity="0.6">
+            <circle cx="50" cy="60" r="4"/><circle cx="100" cy="60" r="4"/><circle cx="150" cy="60" r="4"/><circle cx="200" cy="60" r="4"/>
+            <circle cx="50" cy="100" r="4"/><circle cx="100" cy="100" r="4"/><circle cx="150" cy="100" r="4"/><circle cx="200" cy="100" r="4"/>
+            <circle cx="50" cy="140" r="4"/><circle cx="100" cy="140" r="4"/><circle cx="150" cy="140" r="4"/><circle cx="200" cy="140" r="4"/>
+            <circle cx="50" cy="180" r="4"/><circle cx="100" cy="180" r="4"/><circle cx="150" cy="180" r="4"/><circle cx="200" cy="180" r="4"/>
+            <circle cx="50" cy="220" r="4"/><circle cx="100" cy="220" r="4"/><circle cx="150" cy="220" r="4"/><circle cx="200" cy="220" r="4"/>
+          </g>
+          <!-- B label -->
+          <text x="30" y="250" font-size="13" fill="#2563EB" font-weight="bold">B⃗</text>
+          <!-- Moving rectangular loop (red highlight on left leg) -->
+          <rect x="130" y="70" width="120" height="160" fill="none" stroke="#64748B" stroke-width="2" stroke-dasharray="5,3"/>
+          <!-- Left leg - highlighted (in B field) -->
+          <rect x="127" y="68" width="8" height="166" rx="2" fill="#EF4444" opacity="0.8"/>
+          <!-- Labels for charges in loop -->
+          <circle cx="131" cy="100" r="5" fill="#1E40AF"/><text x="138" y="104" font-size="10" fill="#1E40AF" font-weight="bold">q₄</text>
+          <circle cx="247" cy="100" r="5" fill="#64748B"/><text x="253" y="104" font-size="10" fill="#64748B" font-weight="bold">q₂</text>
+          <circle cx="183" cy="68" r="5" fill="#1E40AF"/><text x="190" y="65" font-size="10" fill="#1E40AF" font-weight="bold">q₃</text>
+          <circle cx="183" cy="235" r="5" fill="#1E40AF"/><text x="190" y="250" font-size="10" fill="#1E40AF" font-weight="bold">q₁</text>
+          <!-- Width label -->
+          <line x1="127" y1="260" x2="135" y2="260" stroke="#64748B" stroke-width="1.5"/>
+          <text x="95" y="155" font-size="13" fill="#1E293B" font-weight="600">w</text>
+          <!-- Velocity arrow -->
+          <line x1="280" y1="150" x2="340" y2="150" stroke="#F59E0B" stroke-width="2.5" marker-end="url(#arr)"/>
+          <text x="290" y="143" font-size="12" fill="#F59E0B" font-weight="bold">v⃗</text>
+          <!-- B=0 region -->
+          <text x="345" y="145" font-size="12" fill="#64748B">B⃗ = 0⃗</text>
+          <!-- Force arrows on left leg -->
+          <line x1="131" y1="150" x2="131" y2="105" stroke="#10B981" stroke-width="2.5" marker-end="url(#arrG)"/>
+          <text x="108" y="130" font-size="10" fill="#10B981">F↑ on q₄</text>
+          <!-- Coordinate axes -->
+          <line x1="480" y1="100" x2="510" y2="100" stroke="#1E293B" stroke-width="1.5" marker-end="url(#arrB)"/>
+          <text x="514" y="104" font-size="10" fill="#1E293B" font-weight="bold">î</text>
+          <line x1="480" y1="100" x2="480" y2="70" stroke="#1E293B" stroke-width="1.5" marker-end="url(#arrB)"/>
+          <text x="484" y="65" font-size="10" fill="#1E293B" font-weight="bold">ĵ</text>
+          <circle cx="480" cy="100" r="5" fill="none" stroke="#1E293B" stroke-width="1.5"/>
+          <text x="485" y="120" font-size="10" fill="#1E293B">k̂⊙</text>
+          <!-- defs -->
+          <defs>
+            <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+              <path d="M0,0 L0,6 L8,3 Z" fill="#F59E0B"/>
+            </marker>
+            <marker id="arrG" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+              <path d="M0,0 L0,6 L8,3 Z" fill="#10B981"/>
+            </marker>
+            <marker id="arrB" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+              <path d="M0,0 L0,6 L8,3 Z" fill="#1E293B"/>
+            </marker>
+          </defs>
+        </svg>
+
+        <p>Consider a rectangular conducting loop partially inside a magnetic field region. Charges \(q_1\) to \(q_4\) are all positive. The element carrying \(q_2\) is not placed in the magnetic field, hence the net force on it is zero.</p>
+
+        <h4>Forces on segments (using Lorentz force)</h4>
+        <div class="eq-box">
+          <div class="eq-label">Force on element 1 (bottom leg)</div>
+          \[\vec{F}_{q_1} = qvB(-\hat{j})\]
+        </div>
+        <div class="eq-box">
+          <div class="eq-label">Force on elements 3 and 4</div>
+          \[\vec{F}_{q_3} = qvB(-\hat{j}) \qquad \vec{F}_{q_4} = qvB(-\hat{j})\]
+        </div>
+
+        <p>The forces on \(q_1\) and \(q_3\) (horizontal legs) are perpendicular to the wire and therefore will <strong>not create any current</strong>. Only the vertical left leg contributes:</p>
+
+        <div class="eq-box">
+          <div class="eq-label">Motional EMF — General</div>
+          \[\varepsilon = \oint_{\text{rectangle}} \frac{\vec{F}_{mag}}{q} \cdot d\vec{l}\]
+        </div>
+
+        <div class="eq-box">
+          <div class="eq-label">Simplifying (only left leg contributes)</div>
+          \[\varepsilon = \oint_{\text{left leg}} \frac{q(\vec{v} \times \vec{B}) \cdot d\vec{l}}{q} = \oint_{\text{left leg}} (\vec{v} \times \vec{B}) \cdot d\vec{l}\]
+        </div>
+
+        <div class="eq-box eq-important">
+          <div class="eq-label">⭐ Result</div>
+          \[\boxed{\varepsilon = vBw}\]
+          where \(w\) is the width of the loop (height of left leg in the field).
+        </div>
+
+        <h3>Deriving Faraday's Law from Motional EMF</h3>
+        <p>Assume the loop has moved \(\Delta l\) in time \(\Delta t\). The change in flux is:</p>
+        <div class="eq-box">
+          <div class="eq-label">Change in flux (negative = flux decreasing)</div>
+          \[\Delta\Phi_{mag} = -Bw\Delta l\]
+        </div>
+        <p>The negative sign indicates a decrease in flux because we are moving the loop away from the magnetic field.</p>
+        <div class="eq-box">
+          <div class="eq-label">Rate of change of flux</div>
+          \[\frac{\Delta\Phi_{mag}}{\Delta t} = -Bw\frac{\Delta l}{\Delta t} \implies \frac{d\Phi_{mag}}{dt} = -Bwv\]
+        </div>
+        <p>Comparing with equation (1) for motional EMF (\(\varepsilon = vBw\)):</p>
+        <div class="eq-box eq-important">
+          <div class="eq-label">⭐ Faraday's Law Derived</div>
+          \[\boxed{\varepsilon = -\frac{d\Phi_{mag}}{dt}}\]
+        </div>
+
+        <div class="info-box green">
+          <strong>✅ Key Insight</strong>
+          This result is derived in one specific context (a moving rectangular loop), but Faraday's law is always true in <em>more general contexts</em> — any loop, any shape, any cause of changing flux.
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ SECTION 4: LENZ'S LAW ═══════════════ -->
+    <section class="section" id="lenz">
+      <div class="section-header">
+        <div class="section-num">4</div>
+        <h2>Lenz's Law</h2>
+      </div>
+
+      <div class="subsection">
+        <div class="definition">
+          <div class="def-title">Lenz's Law</div>
+          The induced EMF is always in a direction so as to <strong>oppose the change in flux</strong> that causes it.
+        </div>
+
+        <p>Lenz's Law gives the direction of the induced current. The negative sign in Faraday's law \(\varepsilon = -d\Phi/dt\) is the mathematical expression of Lenz's Law.</p>
+
+        <!-- Lenz Law SVG diagram -->
+        <svg class="diagram-svg" viewBox="0 0 520 260" xmlns="http://www.w3.org/2000/svg">
+          <rect width="520" height="260" fill="#fff"/>
+          <!-- Case (a): Magnet approaching -->
+          <text x="20" y="22" font-size="11" fill="#64748B" font-weight="600">(a) Magnet approaching →</text>
+          <rect x="20" y="30" width="50" height="25" rx="3" fill="#64748B"/>
+          <text x="26" y="47" font-size="11" fill="white" font-weight="bold">S  N</text>
+          <line x1="70" y1="42" x2="105" y2="42" stroke="#F59E0B" stroke-width="2.5" marker-end="url(#arrY)"/>
+          <!-- Coil ring (a) -->
+          <ellipse cx="145" cy="110" rx="30" ry="80" fill="none" stroke="#B45309" stroke-width="3"/>
+          <ellipse cx="145" cy="110" rx="15" ry="65" fill="none" stroke="#B45309" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.4"/>
+          <!-- Induced current arrow (a) - clockwise when viewed from magnet side = opposing -->
+          <path d="M 145,40 A 30,10 0 0,0 145,40" fill="none"/>
+          <text x="115" y="15" font-size="10" fill="#EF4444" font-weight="600">I (induced, opposing)</text>
+          <!-- B field lines (a) -->
+          <line x1="75" y1="65" x2="115" y2="65" stroke="#2563EB" stroke-width="1.5" opacity="0.6" stroke-dasharray="3,2"/>
+          <line x1="75" y1="85" x2="115" y2="85" stroke="#2563EB" stroke-width="1.5" opacity="0.6" stroke-dasharray="3,2"/>
+          <line x1="75" y1="110" x2="115" y2="110" stroke="#2563EB" stroke-width="1.5" opacity="0.6" stroke-dasharray="3,2"/>
+          <line x1="75" y1="135" x2="115" y2="135" stroke="#2563EB" stroke-width="1.5" opacity="0.6" stroke-dasharray="3,2"/>
+          <line x1="75" y1="155" x2="115" y2="155" stroke="#2563EB" stroke-width="1.5" opacity="0.6" stroke-dasharray="3,2"/>
+
+          <!-- Case (b): Magnet receding -->
+          <text x="290" y="22" font-size="11" fill="#64748B" font-weight="600">(b) Magnet receding ←</text>
+          <!-- Coil ring (b) -->
+          <ellipse cx="355" cy="110" rx="30" ry="80" fill="none" stroke="#B45309" stroke-width="3"/>
+          <line x1="385" y1="42" x2="420" y2="42" stroke="#F59E0B" stroke-width="2.5" marker-end="url(#arrY2)"/>
+          <rect x="422" y="30" width="50" height="25" rx="3" fill="#64748B"/>
+          <text x="428" y="47" font-size="11" fill="white" font-weight="bold">S  N</text>
+          <!-- Induced current (b) - counterclockwise = opposing decrease -->
+          <text x="300" y="15" font-size="10" fill="#10B981" font-weight="600">I (induced, supporting)</text>
+
+          <!-- Labels -->
+          <text x="120" y="210" font-size="11" fill="#1E293B">Flux increasing → induced B opposes</text>
+          <text x="285" y="210" font-size="11" fill="#1E293B">Flux decreasing → induced B supports</text>
+
+          <defs>
+            <marker id="arrY" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+              <path d="M0,0 L0,6 L8,3 Z" fill="#F59E0B"/>
+            </marker>
+            <marker id="arrY2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto-start-reverse">
+              <path d="M0,0 L0,6 L8,3 Z" fill="#F59E0B"/>
+            </marker>
+          </defs>
+        </svg>
+
+        <h3>Three Cases of Changing Magnetic Flux</h3>
+        <p>The magnetic flux through a surface can change with time due to one of the following:</p>
+
+        <div class="grid-3">
+          <div class="card">
+            <h4>Case 1: Moving Loop</h4>
+            <p style="font-size:0.88rem">The area of the loop changes with time — or the loop moves through a non-uniform B-field. This is <em>motional EMF</em>.</p>
+          </div>
+          <div class="card">
+            <h4>Case 2: Rotating Loop</h4>
+            <p style="font-size:0.88rem">The orientation of the surface with respect to the magnetic field changes with time. The loop rotates in a B-field.</p>
+          </div>
+          <div class="card">
+            <h4>Case 3: Changing B</h4>
+            <p style="font-size:0.88rem">The magnitude of the magnetic field changes with time (\(dB/dt \neq 0\)) while the loop remains stationary.</p>
+          </div>
+        </div>
+
+        <!-- Induced Electric Field -->
+        <div class="subsection" id="induced-efield">
+          <h3>Faraday's Law and Induced Electric Field</h3>
+
+          <p>In Cases 1 & 2, there is relative motion between the loop and field, producing motional EMF:</p>
+          <div class="eq-box">
+            \[\varepsilon = \oint_{\text{loop}} \frac{\vec{F}_{mag}}{q} \cdot d\vec{l} = \oint_{\text{loop}} (\vec{v} \times \vec{B}) \cdot d\vec{l}\]
+          </div>
+
+          <p>In <strong>Case 3</strong>, there is <em>no relative motion</em>. We cannot express EMF in terms of \(v\). Instead, a time-varying magnetic field produces an <strong>electric field</strong> in the circuit which causes the motion of charges:</p>
+          <div class="eq-box">
+            \[\varepsilon = \oint_{\text{loop}} \frac{\vec{F}_{ele}}{q} \cdot d\vec{l} = \oint_{\text{loop}} \vec{E} \cdot d\vec{l}\]
+          </div>
+
+          <div class="info-box blue">
+            <strong>💡 Non-Conservative Electric Field</strong>
+            In this case:
+            <ul class="bullet-list" style="margin-top:0.5rem">
+              <li>The line integral of the electric field over a closed loop is <strong>non-zero</strong>.</li>
+              <li>The electric field is <strong>non-conservative</strong> — due to time-varying magnetic flux.</li>
+              <li>The electric field lines (in this case) are <strong>closed loops</strong> — unlike electrostatic E-field lines which start/end on charges.</li>
+            </ul>
+          </div>
+
+          <div class="grid-2" style="margin-top:1.5rem">
+            <div class="card">
+              <h4>Electrostatic E-field (Conservative)</h4>
+              <p style="font-size:0.85rem">Source: static charges. E-lines are open — start at +q and end at −q (or at ∞). \(\oint \vec{E} \cdot d\vec{l} = 0\)</p>
+            </div>
+            <div class="card">
+              <h4>Induced E-field (Non-Conservative)</h4>
+              <p style="font-size:0.85rem">Source: time-dependent magnetic flux \(\vec{B}(t)\). E-lines are closed loops. \(\oint \vec{E} \cdot d\vec{l} \neq 0\)</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ SECTION 5: INDUCTANCE ═══════════════ -->
+    <section class="section" id="inductance">
+      <div class="section-header">
+        <div class="section-num">5</div>
+        <h2>Inductance</h2>
+      </div>
+
+      <div class="subsection">
+        <p>The time-varying current produces a time-varying magnetic field which in turn produces an induced EMF. The magnetic flux \(\Phi\) is proportional to the current \(I\):</p>
+        <div class="eq-box">
+          \[\Phi \propto I\]
+        </div>
+        <p>The proportionality constant is called <strong>Inductance</strong>. There are two types:</p>
+        <div class="grid-2">
+          <div class="card" style="border-top:3px solid var(--accent)">
+            <h4>1. Mutual Inductance (M)</h4>
+            <p style="font-size:0.88rem">Flux linked in one coil due to current in another coil.</p>
+          </div>
+          <div class="card" style="border-top:3px solid var(--purple)">
+            <h4>2. Self Inductance (L)</h4>
+            <p style="font-size:0.88rem">Flux linked in a coil due to its own current.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- MUTUAL INDUCTANCE -->
+      <div class="subsection" id="mutual">
+        <h3>Mutual Inductance</h3>
+
+        <p>The flux produced in coil-2 due to the magnetic field of coil-1 (\(\Phi_{12}\)) is proportional to the current in coil-1 (\(I_1\)):</p>
+
+        <svg class="diagram-svg" viewBox="0 0 480 220" xmlns="http://www.w3.org/2000/svg">
+          <rect width="480" height="220" fill="#fff"/>
+          <!-- Coil 1 (solenoid-like) -->
+          <g>
+            <rect x="30" y="100" width="120" height="70" rx="5" fill="none" stroke="#1E293B" stroke-width="2"/>
+            <text x="40" y="92" font-size="11" fill="#1E293B" font-weight="600">Coil 1</text>
+            <text x="100" y="92" font-size="10" fill="#1E293B">N₁</text>
+            <!-- Windings -->
+            <line x1="52" y1="100" x2="52" y2="170" stroke="#1E293B" stroke-width="1.5" stroke-dasharray="5,3"/>
+            <line x1="68" y1="100" x2="68" y2="170" stroke="#1E293B" stroke-width="1.5" stroke-dasharray="5,3"/>
+            <line x1="84" y1="100" x2="84" y2="170" stroke="#1E293B" stroke-width="1.5" stroke-dasharray="5,3"/>
+            <line x1="100" y1="100" x2="100" y2="170" stroke="#1E293B" stroke-width="1.5" stroke-dasharray="5,3"/>
+            <line x1="116" y1="100" x2="116" y2="170" stroke="#1E293B" stroke-width="1.5" stroke-dasharray="5,3"/>
+            <!-- Current arrow I₁ -->
+            <line x1="30" y1="200" x2="90" y2="200" stroke="#2563EB" stroke-width="2" marker-end="url(#arrA)"/>
+            <text x="45" y="215" font-size="11" fill="#2563EB" font-weight="600">I₁</text>
+          </g>
+          <!-- B field lines from coil 1 -->
+          <line x1="150" y1="120" x2="250" y2="120" stroke="#2563EB" stroke-width="1.5" stroke-dasharray="6,3" opacity="0.7"/>
+          <line x1="150" y1="135" x2="250" y2="135" stroke="#2563EB" stroke-width="1.5" stroke-dasharray="6,3" opacity="0.7"/>
+          <line x1="150" y1="150" x2="250" y2="150" stroke="#2563EB" stroke-width="1.5" stroke-dasharray="6,3" opacity="0.7"/>
+          <text x="175" y="110" font-size="11" fill="#2563EB">B⃗₁</text>
+          <!-- Coil 2 (taller) -->
+          <rect x="250" y="60" width="100" height="150" rx="5" fill="none" stroke="#B45309" stroke-width="2.5"/>
+          <text x="252" y="52" font-size="11" fill="#B45309" font-weight="600">Coil 2</text>
+          <text x="318" y="52" font-size="10" fill="#B45309">N₂</text>
+          <line x1="270" y1="60" x2="270" y2="210" stroke="#B45309" stroke-width="1.5" stroke-dasharray="5,3"/>
+          <line x1="285" y1="60" x2="285" y2="210" stroke="#B45309" stroke-width="1.5" stroke-dasharray="5,3"/>
+          <line x1="300" y1="60" x2="300" y2="210" stroke="#B45309" stroke-width="1.5" stroke-dasharray="5,3"/>
+          <line x1="315" y1="60" x2="315" y2="210" stroke="#B45309" stroke-width="1.5" stroke-dasharray="5,3"/>
+          <!-- Flux label -->
+          <text x="355" y="90" font-size="10" fill="#B45309" font-weight="600">N₂Φ₁₂</text>
+          <!-- Arrows into coil 2 -->
+          <line x1="355" y1="100" x2="430" y2="100" stroke="#10B981" stroke-width="1.5" stroke-dasharray="4,3"/>
+          <line x1="355" y1="135" x2="430" y2="135" stroke="#10B981" stroke-width="1.5" stroke-dasharray="4,3"/>
+          <line x1="355" y1="165" x2="430" y2="165" stroke="#10B981" stroke-width="1.5" stroke-dasharray="4,3"/>
+          <defs>
+            <marker id="arrA" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+              <path d="M0,0 L0,6 L8,3 Z" fill="#2563EB"/>
+            </marker>
+          </defs>
+        </svg>
+
+        <div class="eq-box">
+          <div class="eq-label">Flux linkage</div>
+          \[\Phi_{12} \propto I_1 \implies \Phi_{12} = M_{12} I_1\]
+        </div>
+        <p>where \(M_{12}\) is the mutual inductance between coil-1 and coil-2 due to current in coil-1.</p>
+
+        <p>If there are \(N_2\) turns in the second coil:</p>
+        <div class="eq-box">
+          \[M_{12} = N_2 \frac{\Phi_{12}}{I_1} = \frac{\int_{\text{coil 2}} \vec{B}_1 \cdot d\vec{s}}{I_1}\]
+        </div>
+
+        <p>The induced EMF in coil-2 due to changing current in coil-1:</p>
+        <div class="eq-box eq-important">
+          <div class="eq-label">⭐ Induced EMF in coil-2</div>
+          \[\varepsilon_{12} = -N_2 \frac{d\Phi_{12}}{dt} = -\frac{d(M_{12}I_1)}{dt} = -M_{12}\frac{dI_1}{dt}\]
+        </div>
+
+        <p>The current in coil-2: \(I_2 = \varepsilon_{12}/R_2\)</p>
+
+        <h4>Reciprocity Theorem</h4>
+        <p>Similarly, \(M_{21}\) (flux in coil-1 due to current in coil-2):</p>
+        <div class="eq-box">
+          \[M_{21} = N_1 \frac{\Phi_{21}}{I_2} = \frac{\int_{\text{coil 1}} \vec{B}_2 \cdot d\vec{s}}{I_2}\]
+        </div>
+        <div class="eq-box eq-important">
+          <div class="eq-label">⭐ Reciprocity Theorem</div>
+          \[\boxed{M_{21} = M_{12} = M}\]
+        </div>
+
+        <h4>Mutual Inductance of a Loop Placed Near a Wire</h4>
+        <svg class="diagram-svg" viewBox="0 0 440 240" xmlns="http://www.w3.org/2000/svg">
+          <rect width="440" height="240" fill="#fff"/>
+          <!-- Conductor 1 (vertical wire) -->
+          <line x1="60" y1="20" x2="60" y2="220" stroke="#1E293B" stroke-width="4"/>
+          <text x="25" y="235" font-size="11" fill="#1E293B" font-weight="600">conductor 1</text>
+          <!-- I₁ arrow -->
+          <line x1="60" y1="80" x2="60" y2="40" stroke="#2563EB" stroke-width="2" marker-end="url(#arrC)"/>
+          <text x="66" y="65" font-size="11" fill="#2563EB" font-weight="600">I₁</text>
+          <!-- Distance r -->
+          <line x1="60" y1="130" x2="140" y2="130" stroke="#64748B" stroke-width="1.5" stroke-dasharray="4,3"/>
+          <text x="90" y="125" font-size="11" fill="#64748B">s</text>
+          <!-- Rectangular loop (conductor 2) -->
+          <rect x="140" y="60" width="80" height="160" rx="3" fill="none" stroke="#EF4444" stroke-width="2.5"/>
+          <text x="150" y="50" font-size="11" fill="#EF4444" font-weight="600">conductor 2</text>
+          <!-- Width label -->
+          <line x1="140" y1="235" x2="220" y2="235" stroke="#1E293B" stroke-width="1.5"/>
+          <text x="165" y="228" font-size="11" fill="#1E293B">← w →</text>
+          <!-- Height label -->
+          <line x1="235" y1="60" x2="235" y2="220" stroke="#1E293B" stroke-width="1.5"/>
+          <text x="240" y="145" font-size="11" fill="#1E293B">h</text>
+          <!-- dr' strip -->
+          <rect x="175" y="60" width="12" height="160" rx="2" fill="#F59E0B" opacity="0.4"/>
+          <line x1="175" y1="45" x2="187" y2="45" stroke="#1E293B" stroke-width="1.5"/>
+          <text x="165" y="38" font-size="10" fill="#1E293B">dr'</text>
+          <defs>
+            <marker id="arrC" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+              <path d="M0,0 L0,6 L8,3 Z" fill="#2563EB"/>
+            </marker>
+          </defs>
+        </svg>
+
+        <ul class="bullet-list">
+          <li>\(M_{12}\) is <strong>independent</strong> of the current flowing through the wire.</li>
+          <li>It depends only on the <strong>geometry</strong> of the wire and loop.</li>
+        </ul>
+
+        <p>Using Ampere's law, the magnetic field due to conductor 1 is \(\vec{B}_1 = \frac{\mu_0 I_1}{2\pi r}\):</p>
+
+        <div class="eq-box eq-important">
+          <div class="eq-label">⭐ Mutual Inductance formula</div>
+          \[\boxed{M_{12} = \frac{\mu_0 h}{2\pi} \ln\!\left(\frac{s+w}{s}\right)}\]
+        </div>
+      </div>
+
+      <!-- SELF INDUCTANCE -->
+      <div class="subsection" id="self">
+        <h3>Self Inductance</h3>
+        <p>If the current in a loop is varying, an induced EMF will arise to oppose the change (Lenz's law).</p>
+        <ul class="bullet-list">
+          <li>If \(dI/dt > 0\) (current increasing), the induced current flows <strong>clockwise</strong> (opposing the increase).</li>
+          <li>If \(dI/dt < 0\) (current decreasing), the induced current flows <strong>counter-clockwise</strong> (opposing the decrease).</li>
+        </ul>
+
+        <div class="definition">
+          <div class="def-title">Self Inductance</div>
+          The property of the loop in which its own magnetic field opposes any change in current is called <strong>self-inductance</strong>. The EMF generated is called the <em>self-induced EMF</em> or <em>back EMF</em>.
+        </div>
+
+        <div class="eq-box">
+          \[\Phi \propto I \implies \Phi = LI \implies L = \frac{\Phi}{I}\]
+        </div>
+
+        <div class="eq-box">
+          <div class="eq-label">Self Inductance from magnetic field</div>
+          \[L = \frac{\int_s \vec{B} \cdot d\vec{S}}{I}\]
+        </div>
+
+        <div class="eq-box eq-important">
+          <div class="eq-label">⭐ Self-induced EMF</div>
+          \[\varepsilon = -\frac{d\Phi}{dt} = -L\frac{dI}{dt}\]
+        </div>
+
+        <h4>Self Inductance of a Solenoid</h4>
+        <p>For a solenoid with \(N\) turns, radius \(R\), length \(h\), and turn density \(n = N/h\):</p>
+        <div class="eq-box">
+          <div class="eq-label">Magnetic field inside solenoid</div>
+          \[B = \mu_0 n I\]
+        </div>
+        <div class="eq-box">
+          <div class="eq-label">Derivation</div>
+          \[L = \frac{\Phi_{total}}{I} = \frac{N\Phi_{turn}}{I} = \frac{NBA}{I} = N\mu_0 \pi n R^2\]
+        </div>
+        <div class="eq-box eq-important">
+          <div class="eq-label">⭐ Self Inductance — Solenoid</div>
+          \[\boxed{L = \frac{\mu_0 N^2 \pi R^2}{h}}\]
+        </div>
+
+        <h4>Self Inductance of a Toroid</h4>
+        <p>For a toroid with \(N\) turns, height \(h\), inner radius \(a\), outer radius \(b\):</p>
+        <div class="eq-box">
+          <div class="eq-label">Magnetic field inside toroid (from Ampere's law)</div>
+          \[\vec{B} = \frac{\mu_0 N I}{2\pi r}\]
+        </div>
+        <div class="eq-box">
+          <div class="eq-label">Flux through a single turn</div>
+          \[\Phi_{turn} = \oint_s \vec{B} \cdot d\vec{S} = \frac{\mu_0 N I h}{2\pi} \ln\!\left(\frac{b}{a}\right)\]
+        </div>
+        <div class="eq-box">
+          \[L = \frac{\Phi_{total}}{I} = \frac{N\Phi_{turn}}{I} = \frac{\mu_0 N^2 I h}{2\pi I}\ln\!\left(\frac{b}{a}\right)\]
+        </div>
+        <div class="eq-box eq-important">
+          <div class="eq-label">⭐ Self Inductance — Toroid</div>
+          \[\boxed{L = \frac{\mu_0 N^2 h}{2\pi} \ln\!\left(\frac{b}{a}\right)}\]
+        </div>
+        <div class="info-box green"><strong>✅ Note:</strong> The self inductance is proportional to \(N^2\).</div>
+      </div>
+
+      <!-- MAGNETIC ENERGY DENSITY -->
+      <div class="subsection" id="energy">
+        <h3>Magnetic Energy Density</h3>
+        <p>The amount of work done to increase the current in a solenoid to a certain value is stored as magnetic energy:</p>
+        <div class="eq-box">
+          \[W = \frac{1}{2}LI^2\]
+        </div>
+        <p>The magnetic field inside the solenoid is \(B = \mu_0 n I\). Substituting \(I = B/(\mu_0 n)\) and \(L = \mu_0 N^2 \pi R^2/h\):</p>
+        <div class="eq-box">
+          \[W = \frac{1}{2}L\cdot\frac{B^2 h^2}{\mu_0^2 N^2} = \frac{1}{2}\cdot\frac{\mu_0 N^2 \pi R^2}{h}\cdot\frac{B^2 h^2}{\mu_0^2 N^2}\]
+        </div>
+        <div class="eq-box eq-important">
+          <div class="eq-label">⭐ Energy stored in solenoid</div>
+          \[\boxed{W = \frac{1}{2\mu_0} B^2 (h\pi R^2) = \frac{1}{2\mu_0} B^2 \cdot V_{volume}}\]
+        </div>
+        <p>This gives us the concept of <strong>magnetic energy density</strong>:</p>
+        <div class="eq-box eq-important">
+          <div class="eq-label">⭐ Magnetic Energy Density</div>
+          \[\boxed{\vartheta_{mag} = \frac{B^2}{2\mu_0}}\]
+        </div>
+        <p>For a <em>non-uniform</em> magnetic field (like a toroid), the total energy is:</p>
+        <div class="eq-box">
+          \[U_{stored} = \int_{object} \vartheta_{mag} \, dV\]
+        </div>
+        <h4>Inductance from Energy Density</h4>
+        <p>Equating total magnetic energy to \(\frac{1}{2}LI^2\):</p>
+        <div class="eq-box">
+          \[U = \int_{vol} \vartheta_B \, dv = \frac{1}{2}LI^2\]
+        </div>
+        <div class="eq-box eq-important">
+          <div class="eq-label">⭐ Alternative formula for L</div>
+          \[\boxed{L = \frac{2U}{I^2}}\]
+        </div>
+        <h4>Verification — Solenoid via Energy Method</h4>
+        <div class="eq-box">
+          \[U_{stored} = \frac{(\mu_0 n I)^2}{2\mu_0}(\pi R^2 h) = \frac{\mu_0 n^2 I^2}{2}(\pi R^2 h)\]
+        </div>
+        <div class="eq-box">
+          \[L = \frac{2U}{I^2} = \frac{2 \cdot \mu_0(N/h)^2 I^2}{2I^2}(\pi R^2 h) = \frac{\mu_0 N^2 \pi R^2}{h} \checkmark\]
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ SECTION 6: MAGNETIC MATERIALS ═══════════════ -->
+    <section class="section" id="magnetic-materials">
+      <div class="section-header">
+        <div class="section-num">6</div>
+        <h2>Magnetic Materials</h2>
+      </div>
+
+      <div class="subsection">
+        <h3>Magnetic Dipoles</h3>
+        <p>A bar magnet or a filamentary current loop is usually referred to as a <strong>magnetic dipole</strong>. When placed in a magnetic field, it experiences a torque:</p>
+        <div class="eq-box">
+          \[\vec{\tau} = \vec{\mu} \times \vec{B}\]
+        </div>
+        <p>where \(\vec{\mu}\) is the magnetic dipole moment. Examples include the Earth's magnetic field (as a dipole) and the magnetic field of the human heart.</p>
+      </div>
+
+      <div class="subsection">
+        <h3>Magnetization in Materials</h3>
+        <p>In the atomic model, an electron orbits about a positive nucleus. In each atom:</p>
+        <ul class="bullet-list">
+          <li>The <strong>orbital motion</strong> of electrons around the nucleus produces a magnetic moment (like a current loop).</li>
+          <li>The <strong>spin motion</strong> of electrons about their own axes also produces a magnetic moment.</li>
+          <li>Both these motions produce magnetic fields similar to those produced by a current loop.</li>
+        </ul>
+
+        <p>The magnetic moment of a current loop: \(\mu = I_b A \hat{a}_n\) where \(A\) is area of loop and \(I_b\) is bound current.</p>
+
+        <div class="info-box amber">
+          <strong>Without external field:</strong> The sum of dipole moments becomes zero due to random orientations.<br>
+          <strong>With external field:</strong> Magnetic moments of electrons align themselves with the external field, producing a net non-zero magnetization.
+        </div>
+
+        <h4>Magnetization Vector M</h4>
+        <p>If there are N atoms in a given volume \(\Delta V\) and the \(k^{th}\) atom has magnetic moment \(m_k\):</p>
+        <div class="eq-box">
+          \[\mathbf{M} = \lim_{\Delta V \to 0} \frac{\sum_{k=1}^{N} m_k}{\Delta V} \quad [\text{A/m}]\]
+        </div>
+        <p>The vector <strong>M</strong> is analogous to the polarization <strong>P</strong> in dielectrics and is called the <strong>magnetic polarization density</strong> of the medium.</p>
+
+        <div class="eq-box">
+          <div class="eq-label">Bound current density</div>
+          \[J_b = \nabla \times \mathbf{M}\]
+        </div>
+
+        <p>For materials with \(\mathbf{M} \neq \mathbf{0}\):</p>
+        <div class="eq-box">
+          \[\nabla \times \frac{\mathbf{B}}{\mu_0} = J_f + J_b = J\]
+        </div>
+        <div class="eq-box">
+          \[\nabla \times \frac{\mathbf{B}}{\mu_0} = \nabla \times \mathbf{H} + \nabla \times \mathbf{M}\]
+        </div>
+        <div class="eq-box eq-important">
+          <div class="eq-label">⭐ B, H, M relation</div>
+          \[\boxed{\mathbf{B} = \mu_0 (\mathbf{H} + \mathbf{M})}\]
+        </div>
+
+        <h4>Magnetic Susceptibility and Permeability</h4>
+        <p>For linear materials, \(\mathbf{M}\) depends linearly on \(\mathbf{H}\):</p>
+        <div class="eq-box">
+          \[\mathbf{M} = \chi_m \mathbf{H}\]
+        </div>
+        <p>where \(\chi_m\) is the <strong>magnetic susceptibility</strong> (dimensionless) — a measure of how sensitive the material is to a magnetic field.</p>
+        <div class="eq-box">
+          \[\mathbf{B} = \mu_0(1+\chi_m)\mathbf{H} = \mu\mathbf{H} \quad \Rightarrow \quad \mathbf{B} = \mu_0 \mu_r \mathbf{H}\]
+        </div>
+        <div class="eq-box eq-important">
+          <div class="eq-label">⭐ Relative Permeability</div>
+          \[\mu_r = 1 + \chi_m = \frac{\mu}{\mu_0}\]
+          where \(\mu = \mu_0 \mu_r\) is the permeability of the material (Henry/meter).
+        </div>
+      </div>
+
+      <!-- CLASSIFICATION -->
+      <div class="subsection" id="classification">
+        <h3>Classification of Magnetic Materials</h3>
+        <p>Materials are classified by their magnetic susceptibility \(\chi_m\) or relative permeability \(\mu_r\):</p>
+
+        <div class="grid-3" style="margin-top:1.2rem">
+          <div class="material-card dia">
+            <h4>Diamagnetic</h4>
+            <div class="eq-box" style="margin:0.7rem 0; padding:0.7rem;">
+              \[\chi_m < 0, \quad \mu_r \leq 1\]
+            </div>
+            <p style="font-size:0.85rem">When exposed to a magnetic field, these materials partially <em>oppose</em> the external field. On an atomic scale, an EMF is induced that opposes the applied field. The magnetic field inside is <strong>smaller</strong> than the external field.</p>
+            <p style="font-size:0.8rem; color:#0284C7; margin-top:0.5rem">Examples: Bismuth, Copper, Water, Gold</p>
+          </div>
+          <div class="material-card para">
+            <h4>Paramagnetic</h4>
+            <div class="eq-box" style="margin:0.7rem 0; padding:0.7rem;">
+              \[\chi_m > 0, \quad \mu_r \geq 1\]
+            </div>
+            <p style="font-size:0.85rem">Molecules behave as dipoles. Under an external field, atomic magnets try to align with the field. When the field is removed, the net field returns to <em>zero</em> (no permanent magnetism). There is a force of <strong>attraction</strong>. Temperature dependent.</p>
+            <p style="font-size:0.8rem; color:#059669; margin-top:0.5rem">Examples: Aluminum, Platinum, Oxygen</p>
+          </div>
+          <div class="material-card ferro">
+            <h4>Ferromagnetic</h4>
+            <div class="eq-box" style="margin:0.7rem 0; padding:0.7rem;">
+              \[\chi_m \gg 0, \quad \mu_r \gg 1\]
+            </div>
+            <p style="font-size:0.85rem">Atoms have aligned permanent dipoles in <em>domains</em>. Domains align with applied field. After field removal, some domains <strong>stay aligned</strong> → permanent magnet. Very high attractive force. Temperature dependent (Curie temperature).</p>
+            <p style="font-size:0.8rem; color:#DC2626; margin-top:0.5rem">Examples: Iron, Nickel, Cobalt, Gadolinium</p>
+          </div>
+        </div>
+
+        <h4 style="margin-top:2rem">Distinct Properties of Ferromagnetic Materials</h4>
+        <ul class="bullet-list">
+          <li>They are capable of being magnetized <strong>very strongly</strong> by a magnetic field.</li>
+          <li>They retain a considerable amount of their magnetization when removed from the field.</li>
+          <li>They lose their ferromagnetic properties when the temperature is raised above the <strong>Curie temperature</strong>.</li>
+          <li>They are <strong>nonlinear</strong> — the relation \(\mathbf{B} = \mu\mathbf{H}\) does not hold.</li>
+          <li>Once the field is removed, not all domains return to random positions → some domains remain aligned → material becomes a <strong>permanent magnet</strong>.</li>
+          <li>To remove permanent magnetism: apply mechanical force to disorient domains, or heat above Curie temperature.</li>
+        </ul>
+
+        <h4>Curie Temperatures</h4>
+        <div style="padding:1rem 0">
+          <div class="curie-bar">
+            <div class="material">Iron</div>
+            <div class="bar-track">
+              <div class="bar-fill" style="width:75%; background:linear-gradient(90deg,#EF4444,#DC2626)">770°C</div>
+            </div>
+          </div>
+          <div class="curie-bar">
+            <div class="material">Cobalt</div>
+            <div class="bar-track">
+              <div class="bar-fill" style="width:100%; background:linear-gradient(90deg,#F59E0B,#D97706)">1121°C</div>
+            </div>
+          </div>
+          <div class="curie-bar">
+            <div class="material">Nickel</div>
+            <div class="bar-track">
+              <div class="bar-fill" style="width:34%; background:linear-gradient(90deg,#10B981,#059669)">360°C</div>
+            </div>
+          </div>
+          <div class="curie-bar">
+            <div class="material">Gadolinium</div>
+            <div class="bar-track">
+              <div class="bar-fill" style="width:3%; background:linear-gradient(90deg,#8B5CF6,#7C3AED); min-width:50px">20°C</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- B-H CURVE -->
+      <div class="subsection" id="bh-curve">
+        <h3>B-H Curve and Hysteresis</h3>
+        <p>The B-H curve (or magnetization curve) shows the relationship between the magnetic flux density \(B\) and the magnetic field intensity \(H\) for ferromagnetic materials.</p>
+
+        <div id="bh-canvas-wrap">
+          <canvas id="bhCanvas" width="600" height="380"></canvas>
+        </div>
+
+        <div class="grid-2" style="margin-top:1rem">
+          <div class="card">
+            <h4>Key Points on the B-H Curve</h4>
+            <ul class="bullet-list" style="font-size:0.88rem">
+              <li><strong>oa — Initial magnetization curve:</strong> Starting from the demagnetized state.</li>
+              <li><strong>Hysteresis:</strong> B lags behind H (Greek: "to lag behind").</li>
+              <li><strong>ob — Residual flux density:</strong> B remaining when H is reduced to zero.</li>
+              <li><strong>of — Coercive field:</strong> Reverse H needed to bring B back to zero.</li>
+              <li><strong>Loop area — Hysteresis loss:</strong> Energy dissipated as heat per cycle.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h4>Practical Significance</h4>
+            <ul class="bullet-list" style="font-size:0.88rem">
+              <li><strong>Hard magnetic materials</strong> (large loop): Used for permanent magnets.</li>
+              <li><strong>Soft magnetic materials</strong> (narrow loop): Used for transformer cores (low hysteresis loss).</li>
+              <li>Silicon iron and cast steel have different B-H characteristics.</li>
+              <li>Non-linearity means \(B = \mu H\) does not hold for ferromagnetic materials.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- SHIELDING -->
+      <div class="subsection">
+        <h3>Shielding of Magnetic Fields</h3>
+        <p>For perfect screening, the shield must have <strong>infinite permeability</strong> so that the applied external field does not penetrate the shield.</p>
+        <div class="grid-3">
+          <div class="card" style="text-align:center">
+            <div style="font-size:2rem">🧲</div>
+            <h4>Magnet in Free Space</h4>
+            <p style="font-size:0.83rem">Field lines spread uniformly in all directions.</p>
+          </div>
+          <div class="card" style="text-align:center">
+            <div style="font-size:2rem">🧱</div>
+            <h4>Steel Wall</h4>
+            <p style="font-size:0.83rem">Field lines are redirected through the high-permeability wall. Partial shielding.</p>
+          </div>
+          <div class="card" style="text-align:center">
+            <div style="font-size:2rem">📦</div>
+            <h4>Steel Enclosure</h4>
+            <p style="font-size:0.83rem">Field lines are completely contained. Interior is shielded — near-zero field inside.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- BOUNDARY CONDITIONS -->
+      <div class="subsection" id="boundary">
+        <h3>Boundary Conditions</h3>
+        <p>At the interface between two magnetic media with permeabilities \(\mu_1\) and \(\mu_2\):</p>
+
+        <div class="grid-2">
+          <div>
+            <h4>Normal Components (Gauss's Law for B)</h4>
+            <p>Applying \(\oint \vec{B} \cdot d\vec{s} = 0\) to a Gaussian pillbox:</p>
+            <div class="eq-box">
+              \[B_{1n}\Delta S - B_{2n}\Delta S = 0\]
+            </div>
+            <div class="eq-box eq-important">
+              <div class="eq-label">⭐ Normal component continuity</div>
+              \[\boxed{B_{1n} = B_{2n}} \qquad \boxed{\mu_1 H_{1n} = \mu_2 H_{2n}}\]
+            </div>
+            <p style="font-size:0.88rem">Normal component of <strong>B is continuous</strong>; normal component of <strong>H is discontinuous</strong> at the boundary.</p>
+          </div>
+          <div>
+            <h4>Tangential Components (Ampere's Law)</h4>
+            <p>Applying \(\oint \vec{H} \cdot d\vec{l} = I\) to an Amperian loop (if surface current \(K=0\)):</p>
+            <div class="eq-box eq-important">
+              <div class="eq-label">⭐ Tangential component continuity (K=0)</div>
+              \[\boxed{H_{1t} = H_{2t}} \qquad \boxed{\frac{B_{1t}}{\mu_1} = \frac{B_{2t}}{\mu_2}}\]
+            </div>
+            <p style="font-size:0.88rem">Tangential component of <strong>H is continuous</strong>; tangential component of <strong>B is discontinuous</strong>.</p>
+          </div>
+        </div>
+
+        <h4>Law of Refraction for Magnetic Flux Lines</h4>
+        <div class="eq-box eq-important">
+          \[\boxed{\frac{\tan\theta_1}{\tan\theta_2} = \frac{\mu_1}{\mu_2}}\]
+        </div>
+        <p>General tangential boundary condition (with surface current density \(K\)):</p>
+        <div class="eq-box">
+          \[H_{1t} - H_{2t} = K \qquad \frac{B_{1t}}{\mu_1} - \frac{B_{2t}}{\mu_2} = K\]
+        </div>
+      </div>
+
+      <!-- MAGNETIC CIRCUITS -->
+      <div class="subsection" id="mag-circuits">
+        <h3>Magnetic Circuits</h3>
+        <p>The concept of a magnetic circuit is based on solving magnetic field problems using a circuit approach. Magnetic devices such as toroids, transformers, motors, generators, and relays may be considered as magnetic circuits. There exists a strong analogy between electric and magnetic circuits.</p>
+
+        <div class="grid-2" style="margin:1.2rem 0">
+          <div class="card">
+            <h4>Magnetomotive Force (MMF)</h4>
+            <div class="eq-box">
+              \[\mathcal{F} = NI = \oint \mathbf{H} \cdot d\mathbf{l} \quad [\text{Ampere-turns}]\]
+            </div>
+            <p style="font-size:0.85rem">The source of MMF in a magnetic circuit is usually a coil carrying current.</p>
+          </div>
+          <div class="card">
+            <h4>Reluctance</h4>
+            <div class="eq-box">
+              \[\mathfrak{R} = \frac{l}{\mu S} \quad \left[\frac{\text{A·turns}}{\text{Wb}} = \frac{1}{\text{H}}\right]\]
+            </div>
+            <p style="font-size:0.85rem">where \(l\) and \(S\) are mean length and cross-sectional area. The reciprocal is <strong>permeance</strong> \(\mathcal{P} = 1/\mathfrak{R}\) (Henry).</p>
+          </div>
+        </div>
+
+        <div class="eq-box eq-important">
+          <div class="eq-label">⭐ Magnetic Ohm's Law</div>
+          \[\mathcal{F} = \Psi \mathfrak{R}\]
+        </div>
+
+        <h4>Series and Parallel Magnetic Circuits</h4>
+        <div class="grid-2">
+          <div class="card">
+            <h4>Series Circuit (n elements)</h4>
+            <div class="eq-box" style="padding:0.7rem">
+              \[\Psi_1 = \Psi_2 = \cdots = \Psi_n\]
+              \[\mathcal{F} = \mathcal{F}_1 + \mathcal{F}_2 + \cdots + \mathcal{F}_n\]
+            </div>
+          </div>
+          <div class="card">
+            <h4>Parallel Circuit (n branches)</h4>
+            <div class="eq-box" style="padding:0.7rem">
+              \[\Psi = \Psi_1 + \Psi_2 + \cdots + \Psi_n\]
+              \[\mathcal{F}_1 = \mathcal{F}_2 = \cdots = \mathcal{F}_n\]
+            </div>
+          </div>
+        </div>
+
+        <h4>Complete Analogy: Electric vs Magnetic Circuits</h4>
+        <div class="tbl-wrap">
+          <table>
+            <thead>
+              <tr><th>Electric Circuit</th><th>Magnetic Circuit</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Electromotive force (emf), \(e\)</td><td>Magnetomotive force (mmf), \(\mathcal{F}\)</td></tr>
+              <tr><td>Current, \(I = \int \mathbf{J} \cdot d\mathbf{s}\)</td><td>Magnetic flux, \(\Psi = \int \mathbf{B} \cdot d\mathbf{s}\)</td></tr>
+              <tr><td>Current density, \(J = I/A = \sigma E\)</td><td>Flux density, \(B = \Psi/A = \mu H\)</td></tr>
+              <tr><td>Resistance, \(R = \rho l/A = l/(\sigma A)\)</td><td>Reluctance, \(\mathfrak{R} = l/(\mu S)\)</td></tr>
+              <tr><td>Conductance, \(G = 1/R\)</td><td>Permeance, \(\mathcal{P} = 1/\mathfrak{R}\)</td></tr>
+              <tr><td>Ohm's law, \(V = IR\)</td><td>\(\mathcal{F} = NI = \Psi\mathfrak{R}\)</td></tr>
+              <tr><td>Field intensity, \(E\)</td><td>Field intensity, \(H\)</td></tr>
+              <tr><td>Conductivity \(\sigma\)</td><td>Permeability \(\mu\)</td></tr>
+              <tr><td>Sum of currents = 0, \(\sum I = 0\)</td><td>Sum of fluxes = 0, \(\sum \Psi = 0\)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════ SECTION 7: MAXWELL'S EQUATIONS ═══════════════ -->
+    <section class="section" id="maxwell">
+      <div class="section-header">
+        <div class="section-num">7</div>
+        <h2>Maxwell's Equations</h2>
+      </div>
+
+      <div class="subsection">
+        <h3>Maxwell's Equations — State Before Modification</h3>
+        <p>Before Maxwell's correction, the four equations were:</p>
+        <div class="maxwell-grid">
+          <div class="maxwell-cell">
+            <div class="maxwell-name">Gauss's Law (Electric)</div>
+            \[\oint_s \vec{E} \cdot d\vec{s} = \frac{Q}{\varepsilon_0}\]
+          </div>
+          <div class="maxwell-cell">
+            <div class="maxwell-name">Faraday's Law</div>
+            \[\oint_\ell \vec{E} \cdot d\vec{l} = -\frac{d\Phi}{dt} = \int_s \left(-\frac{\partial\mathbf{B}}{\partial t}\right) \cdot d\vec{s}\]
+          </div>
+          <div class="maxwell-cell">
+            <div class="maxwell-name">Gauss's Law (Magnetic)</div>
+            \[\oint_s \vec{B} \cdot d\vec{s} = 0\]
+          </div>
+          <div class="maxwell-cell">
+            <div class="maxwell-name">Ampere's Law (Original)</div>
+            \[\oint_\ell \vec{B} \cdot d\vec{l} = \mu_0 I_{enclosed}\]
+          </div>
+        </div>
+      </div>
+
+      <!-- DISPLACEMENT CURRENT -->
+      <div class="subsection" id="displacement">
+        <h3>Displacement Current — Maxwell's Correction</h3>
+
+        <div class="info-box red">
+          <strong>⚠ Inconsistency in Ampere's Law</strong>
+          Consider a capacitor being charged by a current \(I\). For surface \(S_1\) (flat disc): \(I_{enclosed} = I\). For surface \(S_2\) (bag/balloon shape that passes between capacitor plates): \(I_{enclosed} = 0\). The result of Ampere's law depends on <em>which surface</em> we choose — there is an ambiguity! Maxwell found this inconsistency and fixed it!
+        </div>
+
+        <!-- Displacement current diagram -->
+        <svg class="diagram-svg" viewBox="0 0 560 250" xmlns="http://www.w3.org/2000/svg">
+          <rect width="560" height="250" fill="#fff"/>
+          <!-- Left diagram: S1 disc -->
+          <text x="70" y="20" font-size="11" fill="#2563EB" font-weight="600">Surface S₁ (flat disc): I_enc = I</text>
+          <!-- Amperian loop -->
+          <ellipse cx="145" cy="130" rx="70" ry="50" fill="none" stroke="#2563EB" stroke-width="2" stroke-dasharray="5,3"/>
+          <text x="155" y="135" font-size="10" fill="#2563EB" font-weight="600">P</text>
+          <!-- S1 flat disc -->
+          <ellipse cx="145" cy="110" rx="45" ry="15" fill="#DBEAFE" stroke="#2563EB" stroke-width="1.5" opacity="0.7"/>
+          <text x="120" y="108" font-size="10" fill="#2563EB">S₁</text>
+          <!-- Wire (current i) -->
+          <line x1="145" y1="15" x2="145" y2="200" stroke="#EF4444" stroke-width="3"/>
+          <!-- Capacitor plates -->
+          <rect x="115" y="85" width="60" height="6" rx="2" fill="#F59E0B"/>
+          <rect x="115" y="125" width="60" height="6" rx="2" fill="#1E3A5F"/>
+          <!-- Current arrows -->
+          <line x1="145" y1="180" x2="145" y2="145" stroke="#EF4444" stroke-width="2" marker-end="url(#arrR)"/>
+          <text x="152" y="170" font-size="11" fill="#EF4444" font-weight="bold">i</text>
+          <line x1="145" y1="75" x2="145" y2="35" stroke="#EF4444" stroke-width="2" marker-end="url(#arrR)"/>
+          <text x="152" y="60" font-size="11" fill="#EF4444" font-weight="bold">i</text>
+
+          <!-- Right diagram: S2 bag -->
+          <text x="310" y="20" font-size="11" fill="#10B981" font-weight="600">Surface S₂ (bag): I_enc = 0, but I_dis = I</text>
+          <!-- Amperian loop -->
+          <ellipse cx="430" cy="130" rx="70" ry="50" fill="none" stroke="#10B981" stroke-width="2" stroke-dasharray="5,3"/>
+          <text x="440" y="135" font-size="10" fill="#10B981" font-weight="600">P</text>
+          <!-- S2 bag shape -->
+          <path d="M 390,110 Q 430,175 470,110" fill="#DCFCE7" stroke="#10B981" stroke-width="1.5" opacity="0.7"/>
+          <text x="405" y="155" font-size="10" fill="#10B981">S₂</text>
+          <!-- Wire (current i) -->
+          <line x1="430" y1="15" x2="430" y2="200" stroke="#EF4444" stroke-width="3"/>
+          <!-- Capacitor plates -->
+          <rect x="400" y="85" width="60" height="6" rx="2" fill="#F59E0B"/>
+          <rect x="400" y="125" width="60" height="6" rx="2" fill="#1E3A5F"/>
+          <!-- Current arrows -->
+          <line x1="430" y1="180" x2="430" y2="145" stroke="#EF4444" stroke-width="2" marker-end="url(#arrR)"/>
+          <line x1="430" y1="75" x2="430" y2="35" stroke="#EF4444" stroke-width="2" marker-end="url(#arrR)"/>
+          <!-- E field between plates -->
+          <line x1="410" y1="100" x2="410" y2="120" stroke="#8B5CF6" stroke-width="2" marker-end="url(#arrP)"/>
+          <line x1="420" y1="100" x2="420" y2="120" stroke="#8B5CF6" stroke-width="2" marker-end="url(#arrP)"/>
+          <line x1="430" y1="100" x2="430" y2="120" stroke="#8B5CF6" stroke-width="2" marker-end="url(#arrP)"/>
+          <line x1="440" y1="100" x2="440" y2="120" stroke="#8B5CF6" stroke-width="2" marker-end="url(#arrP)"/>
+          <line x1="450" y1="100" x2="450" y2="120" stroke="#8B5CF6" stroke-width="2" marker-end="url(#arrP)"/>
+          <text x="457" y="112" font-size="9" fill="#8B5CF6">E↑, dE/dt</text>
+          <defs>
+            <marker id="arrR" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+              <path d="M0,0 L0,6 L8,3 Z" fill="#EF4444"/>
+            </marker>
+            <marker id="arrP" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+              <path d="M0,0 L0,6 L8,3 Z" fill="#8B5CF6"/>
+            </marker>
+          </defs>
+        </svg>
+
+        <h4>Maxwell's Resolution</h4>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div>When current is increasing, the capacitor is charging, and the electric field between the plates is increasing (\(dE/dt > 0\)).</div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div>In surface \(S_2\), there should be a term with units of Ampere that relates to the increasing \(E\): 
+            \[\oint_\ell \vec{B} \cdot d\vec{l} = \mu_0(I_{enclosed} + \ldots)\]</div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div>The electric field between the plates: \(|\vec{E}| = Q/(\varepsilon_0 A)\), so \(\frac{dQ}{dt} = \frac{d\vec{E}}{dt}\varepsilon_0 A = \frac{d\vec{D}}{dt}A\)</div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div>The rate of change of charge is current — this is the <strong>displacement current</strong>:
+            \[I_{dis} = \frac{dQ}{dt} = \frac{d\vec{D}}{dt}A\]</div>
+          </div>
+        </div>
+
+        <div class="eq-box eq-important">
+          <div class="eq-label">⭐ Displacement Current Density</div>
+          \[\boxed{J_d = \frac{\partial\mathbf{D}}{\partial t}}\]
+        </div>
+
+        <div class="eq-box eq-important">
+          <div class="eq-label">⭐ Maxwell-Ampere Equation</div>
+          \[\oint_\ell \vec{B} \cdot d\vec{l} = \mu_0(I_{enclosed} + I_{displacement})\]
+        </div>
+
+        <h4>Rigorous Derivation of Displacement Current</h4>
+        <p>In the point (differential) form of Ampere's law:</p>
+        <div class="eq-box">
+          \[\nabla \times H = J\]
+        </div>
+        <p>From vector identity, the divergence of a curl is always zero:</p>
+        <div class="eq-box">
+          \[\nabla \cdot (\nabla \times H) = 0 = \nabla \cdot J\]
+        </div>
+        <p>But from the continuity equation:</p>
+        <div class="eq-box">
+          \[\nabla \cdot J = -\frac{\partial \rho_v}{\partial t} \neq 0\]
+        </div>
+        <p>There is a contradiction! Maxwell corrected this by adding \(J_d\):</p>
+        <div class="eq-box">
+          \[\nabla \times H = J + J_d\]
+          \[\nabla \cdot (\nabla \times H) = \nabla \cdot (J + J_d) = 0\]
+          \[\nabla \cdot J_d = \frac{\partial \rho_v}{\partial t} = \frac{\partial}{\partial t}(\nabla \cdot D) = \nabla \cdot \frac{\partial D}{\partial t}\]
+        </div>
+        <div class="eq-box eq-important">
+          <div class="eq-label">⭐ Therefore</div>
+          \[\boxed{J_d = \frac{\partial D}{\partial t}}\]
+        </div>
+        <div class="eq-box eq-important">
+          <div class="eq-label">⭐ Maxwell-Ampere Law (Point Form)</div>
+          \[\boxed{\nabla \times H = J + \frac{\partial D}{\partial t}}\]
+        </div>
+      </div>
+
+      <!-- FINAL FORM -->
+      <div class="subsection" id="final-form">
+        <h3>Final Form of Maxwell's Equations</h3>
+
+        <div class="info-box purple">
+          <strong>🌟 The Four Laws of Electromagnetism</strong>
+          These four equations unify electricity, magnetism, and optics. They are the foundation of classical electrodynamics.
+        </div>
+
+        <div class="tbl-wrap" style="margin-top:1.5rem">
+          <table>
+            <thead>
+              <tr>
+                <th>Law</th>
+                <th>Integral Form</th>
+                <th>Point (Differential) Form</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Gauss's Law (Electric)</strong></td>
+                <td>\(\oint_s \mathbf{E} \cdot d\mathbf{s} = \dfrac{Q}{\varepsilon_0}\)</td>
+                <td>\(\nabla \cdot \mathbf{D} = \rho_v\)</td>
+              </tr>
+              <tr>
+                <td><strong>Faraday's Law</strong></td>
+                <td>\(\oint_\ell \mathbf{E} \cdot d\mathbf{l} = -\oint_s \mathbf{B} \cdot d\mathbf{s}\)</td>
+                <td>\(\nabla \times \mathbf{E} = -\dfrac{\partial\mathbf{B}}{\partial t}\)</td>
+              </tr>
+              <tr>
+                <td><strong>Gauss's Law (Magnetic)</strong></td>
+                <td>\(\oint_s \mathbf{B} \cdot d\mathbf{s} = 0\)</td>
+                <td>\(\nabla \cdot \mathbf{B} = 0\)</td>
+              </tr>
+              <tr>
+                <td><strong>Maxwell-Ampere Law</strong></td>
+                <td>\(\oint_\ell \mathbf{B} \cdot d\mathbf{l} = \mu_0\!\left(\oint_s\!\left(\mathbf{J} + \dfrac{\partial\mathbf{D}}{\partial t}\right)\!d\mathbf{s}\right)\)</td>
+                <td>\(\nabla \times \mathbf{H} = \mathbf{J} + \dfrac{\partial\mathbf{D}}{\partial t}\)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Big equation display -->
+        <div style="background:var(--navy);border-radius:16px;padding:2.5rem 2rem;margin-top:2rem;text-align:center">
+          <p style="color:rgba(255,255,255,0.5);font-size:0.8rem;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:1.5rem">Maxwell's Equations — Point Form</p>
+          <div style="color:#fff; font-size:0.95rem; line-height:2.8">
+            <div style="color:#38BDF8">\[\nabla \cdot \mathbf{D} = \rho_v\]</div>
+            <div style="color:#34D399">\[\nabla \times \mathbf{E} = -\frac{\partial\mathbf{B}}{\partial t}\]</div>
+            <div style="color:#F472B6">\[\nabla \cdot \mathbf{B} = 0\]</div>
+            <div style="color:#FBBF24">\[\nabla \times \mathbf{H} = \mathbf{J} + \frac{\partial\mathbf{D}}{\partial t}\]</div>
+          </div>
+        </div>
+
+        <div class="info-box green" style="margin-top:1.5rem">
+          <strong>✅ Physical Meaning of Each Equation:</strong>
+          <ul class="bullet-list" style="margin-top:0.5rem">
+            <li><strong>\(\nabla \cdot \mathbf{D} = \rho_v\):</strong> Electric charges are sources of the electric field.</li>
+            <li><strong>\(\nabla \times \mathbf{E} = -\partial\mathbf{B}/\partial t\):</strong> Time-varying magnetic fields create electric fields (Faraday).</li>
+            <li><strong>\(\nabla \cdot \mathbf{B} = 0\):</strong> There are no magnetic monopoles; magnetic field lines are closed loops.</li>
+            <li><strong>\(\nabla \times \mathbf{H} = \mathbf{J} + \partial\mathbf{D}/\partial t\):</strong> Electric currents AND time-varying electric fields create magnetic fields (Maxwell-Ampere).</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <svg viewBox="0 0 160 50" fill="none" xmlns="http://www.w3.org/2000/svg" style="height:45px;margin-bottom:1rem">
+    <circle cx="25" cy="25" r="20" fill="#2563EB"/>
+    <path d="M15 25 L25 16 L35 25 L25 34 Z" fill="none" stroke="#38BDF8" stroke-width="2.5"/>
+    <circle cx="25" cy="25" r="5" fill="#38BDF8"/>
+    <text x="52" y="20" font-family="'Space Grotesk',sans-serif" font-weight="700" font-size="16" fill="white">Scholar</text>
+    <text x="52" y="38" font-family="'Space Grotesk',sans-serif" font-weight="400" font-size="13" fill="#38BDF8">nest</text>
+  </svg>
+  <p>Chapter 4 · Electromagnetic Theory · Time Varying Fields &amp; Magnetic Materials</p>
+  <p style="margin-top:0.5rem">© 2026 <strong>Scholarnest</strong> · Educational Resource</p>
+</footer>
+
+<script>
+// ── PROGRESS BAR ──────────────────────
+window.addEventListener('scroll', () => {
+  const doc = document.documentElement;
+  const progress = doc.scrollTop / (doc.scrollHeight - doc.clientHeight);
+  document.getElementById('progress-bar').style.transform = `scaleX(${progress})`;
+});
+
+// ── FARADAY SIMULATION ────────────────
+(function(){
+  const canvas = document.getElementById('faradayCanvas');
+  const ctx = canvas.getContext('2d');
+  canvas.width = canvas.offsetWidth || 700;
+  canvas.height = 200;
+
+  let playing = false;
+  let magX = 50;
+  let dir = 1;
+  let frameId;
+  const coilX = canvas.width * 0.6;
+  const coilY = 100;
+  let t = 0;
+
+  function getSpeed() {
+    return parseFloat(document.getElementById('magnetSpeed').value);
+  }
+
+  function drawScene() {
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    // Background
+    ctx.fillStyle = '#0B1E3D';
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+
+    // Grid dots (field representation)
+    ctx.fillStyle = 'rgba(56,189,248,0.15)';
+    for(let x=20;x<canvas.width;x+=40)
+      for(let y=20;y<canvas.height;y+=40)
+        { ctx.beginPath(); ctx.arc(x,y,2,0,Math.PI*2); ctx.fill(); }
+
+    // Draw magnet
+    const mw=60, mh=30;
+    const mx = magX;
+    const my = coilY - mh/2;
+    // S half
+    ctx.fillStyle = '#3B82F6';
+    ctx.fillRect(mx, my, mw/2, mh);
+    ctx.fillStyle='#93C5FD';
+    ctx.font='bold 13px Inter'; ctx.textAlign='center';
+    ctx.fillText('S', mx+mw/4, my+mh/2+5);
+    // N half
+    ctx.fillStyle = '#EF4444';
+    ctx.fillRect(mx+mw/2, my, mw/2, mh);
+    ctx.fillStyle='#FCA5A5';
+    ctx.fillText('N', mx+mw*3/4, my+mh/2+5);
+
+    // Magnetic field lines
+    const proximity = coilX - (magX+mw);
+    const opacity = Math.max(0, Math.min(0.8, 1 - proximity/300));
+
+    ctx.strokeStyle = `rgba(56,189,248,${opacity})`;
+    ctx.lineWidth = 1.5;
+    [-25,-10,5,20].forEach(offset => {
+      ctx.beginPath();
+      ctx.moveTo(mx+mw, coilY+offset);
+      ctx.bezierCurveTo(mx+mw+30, coilY+offset-10, coilX-30, coilY+offset-10, coilX, coilY+offset);
+      ctx.stroke();
+    });
+
+    // Coil (solenoid representation)
+    ctx.strokeStyle = '#F59E0B';
+    ctx.lineWidth = 3;
+    const cr = 55;
+    for(let i=0;i<5;i++){
+      const cx2 = coilX + i*12 - 24;
+      ctx.beginPath();
+      ctx.ellipse(cx2, coilY, 6, cr, 0, 0, Math.PI*2);
+      ctx.stroke();
+    }
+
+    // Compute flux and EMF
+    const maxFlux = 1.5;
+    const dist = coilX - (magX + mw);
+    const flux = maxFlux * Math.max(0, 1 - dist/250);
+    const speed = getSpeed();
+    const emf = playing ? -flux * speed * 0.03 * dir : 0;
+
+    document.getElementById('fluxLabel').textContent = `Flux: ${flux.toFixed(2)} Wb`;
+    document.getElementById('emfLabel').textContent = `EMF: ${Math.abs(emf).toFixed(2)} V`;
+
+    // EMF indicator
+    if(Math.abs(emf) > 0.01) {
+      const r2 = 40;
+      const cx3 = coilX + 80, cy3 = coilY;
+      ctx.strokeStyle = '#38BDF8';
+      ctx.lineWidth = 2;
+      ctx.setLineDash([4,3]);
+      ctx.beginPath();
+      ctx.arc(cx3, cy3, r2, 0, Math.PI*2);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      // Arrow for current direction
+      const angle = emf > 0 ? 0 : Math.PI;
+      ctx.fillStyle = '#38BDF8';
+      ctx.beginPath();
+      ctx.arc(cx3 + r2*Math.cos(angle), cy3 + r2*Math.sin(angle), 6, 0, Math.PI*2);
+      ctx.fill();
+      ctx.fillStyle = '#fff';
+      ctx.font = '10px Inter'; ctx.textAlign='center';
+      ctx.fillText('A', cx3, cy3+4);
+    }
+
+    // Labels
+    ctx.fillStyle = 'rgba(255,255,255,0.6)';
+    ctx.font = '11px Inter'; ctx.textAlign='center';
+    ctx.fillText('Bar Magnet', magX+30, canvas.height-12);
+    ctx.fillText('Conducting Coil', coilX, canvas.height-12);
+  }
+
+  function loop() {
+    const speed = getSpeed();
+    magX += dir * speed * 0.8;
+    if(magX > coilX - 50) { dir = -1; }
+    if(magX < 30) { dir = 1; }
+    drawScene();
+    if(playing) frameId = requestAnimationFrame(loop);
+  }
+
+  document.getElementById('faradayPlay').addEventListener('click', function(){
+    if(playing) {
+      playing = false; cancelAnimationFrame(frameId);
+      this.textContent = '▶ Play';
+    } else {
+      playing = true;
+      this.textContent = '⏸ Pause';
+      loop();
+    }
+  });
+  document.getElementById('faradayReset').addEventListener('click', function(){
+    playing = false; cancelAnimationFrame(frameId);
+    document.getElementById('faradayPlay').textContent = '▶ Play';
+    magX = 50; dir = 1; drawScene();
+  });
+
+  drawScene();
+})();
+
+// ── B-H CURVE ─────────────────────────
+(function(){
+  const canvas = document.getElementById('bhCanvas');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  const cx = W/2, cy = H/2;
+  const scaleX = W*0.35, scaleY = H*0.35;
+
+  function bhPoint(h) {
+    // Sigmoid approximation
+    return 2 * (1/(1+Math.exp(-3*h)) - 0.5);
+  }
+
+  // Hysteresis loop points
+  function hysteresisCurve() {
+    const pts = [];
+    // Going up (right)
+    for(let h=-1.2;h<=1.2;h+=0.02){
+      const b = bhPoint(h) + 0.2 * Math.tanh(2*(h-0.1));
+      pts.push({h,b});
+    }
+    return pts;
+  }
+
+  function hysteresisDown() {
+    const pts = [];
+    for(let h=1.2;h>=-1.2;h-=0.02){
+      const b = bhPoint(h) - 0.2 * Math.tanh(2*(h+0.1));
+      pts.push({h,b});
+    }
+    return pts;
+  }
+
+  ctx.clearRect(0,0,W,H);
+  ctx.fillStyle = '#fff'; ctx.fillRect(0,0,W,H);
+
+  // Grid
+  ctx.strokeStyle='#E2E8F0'; ctx.lineWidth=1;
+  for(let i=-6;i<=6;i++){
+    ctx.beginPath(); ctx.moveTo(cx+i*scaleX/5,20); ctx.lineTo(cx+i*scaleX/5,H-20); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(20,cy+i*scaleY/5); ctx.lineTo(W-20,cy+i*scaleY/5); ctx.stroke();
+  }
+
+  // Axes
+  ctx.strokeStyle='#1E293B'; ctx.lineWidth=2;
+  ctx.beginPath(); ctx.moveTo(20,cy); ctx.lineTo(W-20,cy); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(cx,20); ctx.lineTo(cx,H-20); ctx.stroke();
+
+  // Axis labels
+  ctx.fillStyle='#1E293B'; ctx.font='bold 15px Space Grotesk'; ctx.textAlign='center';
+  ctx.fillText('H (A/m)', W-40, cy-10);
+  ctx.save(); ctx.translate(cx+15, 35); ctx.rotate(0);
+  ctx.fillText('B (T)', cx-15, 30); ctx.restore();
+
+  // Initial magnetization curve
+  ctx.strokeStyle='#0EA5E9'; ctx.lineWidth=2.5; ctx.setLineDash([5,3]);
+  ctx.beginPath();
+  let first=true;
+  for(let h=-0.02;h<=1.25;h+=0.02){
+    const b = bhPoint(h)*0.9;
+    const px = cx + h*scaleX;
+    const py = cy - b*scaleY;
+    if(first){ ctx.moveTo(px,py); first=false; } else ctx.lineTo(px,py);
+  }
+  ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.fillStyle='#0EA5E9'; ctx.font='12px Inter'; ctx.textAlign='left';
+  ctx.fillText('oa: Initial magnetization', cx+scaleX*0.5, cy-scaleY*0.7);
+
+  // Hysteresis loop - orange (soft material)
+  const up = hysteresisCurve();
+  const down = hysteresisDown();
+
+  ctx.strokeStyle='#F59E0B'; ctx.lineWidth=2.5;
+  ctx.beginPath(); first=true;
+  up.forEach(p=>{
+    const px=cx+p.h*scaleX*0.8, py=cy-p.b*scaleY;
+    if(first){ctx.moveTo(px,py);first=false;} else ctx.lineTo(px,py);
+  });
+  ctx.stroke();
+
+  ctx.strokeStyle='#EF4444'; ctx.lineWidth=2.5;
+  ctx.beginPath(); first=true;
+  down.forEach(p=>{
+    const px=cx+p.h*scaleX*0.8, py=cy-p.b*scaleY;
+    if(first){ctx.moveTo(px,py);first=false;} else ctx.lineTo(px,py);
+  });
+  ctx.stroke();
+
+  // Labels: residual flux (b), coercive (f), saturation (a)
+  const bRes = cy - bhPoint(0)*scaleY*0.85;
+  ctx.fillStyle='#EF4444'; ctx.font='bold 13px Space Grotesk'; ctx.textAlign='left';
+  ctx.fillText('b (Residual flux)', cx+8, bRes-5);
+
+  const hCoer = cx - 0.25*scaleX*0.8;
+  ctx.fillStyle='#2563EB'; ctx.font='bold 13px Space Grotesk'; ctx.textAlign='center';
+  ctx.fillText('f', hCoer, cy+18);
+  ctx.fillText('(Coercive field)', hCoer, cy+32);
+
+  ctx.fillStyle='#F59E0B'; ctx.textAlign='left';
+  ctx.fillText('a (Saturation)', cx + 1.2*scaleX*0.8-50, cy-scaleY*0.85);
+
+  // Point labels on axes
+  ctx.fillStyle='#1E293B'; ctx.font='12px Inter'; ctx.textAlign='center';
+  ctx.fillText('O', cx+8, cy+16);
+  ctx.fillText('+H', W-22, cy-8);
+  ctx.fillText('+B', cx+15, 18);
+  ctx.fillText('-H', 22, cy-8);
+  ctx.fillText('-B', cx+15, H-12);
+
+  // Legend
+  ctx.strokeStyle='#0EA5E9'; ctx.setLineDash([5,3]); ctx.lineWidth=2;
+  ctx.beginPath(); ctx.moveTo(30,340); ctx.lineTo(70,340); ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.fillStyle='#0EA5E9'; ctx.font='11px Inter'; ctx.textAlign='left';
+  ctx.fillText('Initial magnetization', 75, 344);
+
+  ctx.strokeStyle='#F59E0B'; ctx.lineWidth=2;
+  ctx.beginPath(); ctx.moveTo(30,360); ctx.lineTo(70,360); ctx.stroke();
+  ctx.fillStyle='#F59E0B'; ctx.fillText('Ascending curve', 75, 364);
+
+  ctx.strokeStyle='#EF4444'; ctx.lineWidth=2;
+  ctx.beginPath(); ctx.moveTo(180,360); ctx.lineTo(220,360); ctx.stroke();
+  ctx.fillStyle='#EF4444'; ctx.fillText('Descending curve (Hysteresis)', 225, 364);
+})();
+
+// ── TOC ACTIVE TRACKING ───────────────
+const sections = document.querySelectorAll('section[id]');
+const tocLinks = document.querySelectorAll('.toc a');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting) {
+      tocLinks.forEach(l => l.classList.remove('active'));
+      const link = document.querySelector(`.toc a[href="#${e.target.id}"]`);
+      if(link) link.classList.add('active');
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
